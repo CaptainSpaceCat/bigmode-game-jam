@@ -5,6 +5,8 @@ var update_flag: bool = false
 var discrete_position: Vector2i  # World grid position of the machine
 var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
 var locked_by_default: bool = false
+var letterPrefab: PackedScene = preload("res://Prefabs/letter.tscn")
+
 
 # Check whether the inserted IO will be accepted by this machine
 func can_accept_input(from: Vector2i, to: Vector2i) -> bool:
@@ -32,11 +34,22 @@ func try_accept_input(from: Vector2i, to: Vector2i, letter: Letter) -> bool:
 func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	return false
 
+
+func create_letter(l: String, pos: Vector2) -> Letter:
+	var letter: Letter = letterPrefab.instantiate()
+	letter.set_letter(l)
+	letter.global_position = pos
+	# Add to scene tree, parented to the ItemManager node
+	get_item_parent().add_child(letter)
+	return letter
+
+
 # This should get overridden in derived classes to customize the machine's cycle
 func perform_cycle(machine_map: Dictionary) -> void:
 	pass
 
-
+func get_held_items() -> Array:
+	return []
 
 # Store and retrieve IO objects
 
@@ -48,6 +61,12 @@ func add_input(from: Vector2i, to: Vector2i) -> void:
 
 func add_output(from: Vector2i, to: Vector2i) -> void:
 	output_array.append(MachineIO.new(from, to))
+
+func clear_inputs() -> void:
+	input_array.clear()
+
+func clear_outputs() -> void:
+	output_array.clear()
 
 func num_inputs() -> int:
 	return len(input_array)

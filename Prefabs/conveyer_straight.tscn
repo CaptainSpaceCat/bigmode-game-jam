@@ -7,16 +7,24 @@
 atlas = ExtResource("2_6i4g8")
 region = Rect2(0, 80, 16, 16)
 
-[node name="ConveyerStraight" type="Node2D" node_paths=PackedStringArray("renderA", "renderB")]
+[node name="ConveyerStraight" type="Node2D" node_paths=PackedStringArray("render0", "render1", "render2", "render3")]
 script = ExtResource("1_j6j8e")
-renderA = NodePath("InputSpace")
-renderB = NodePath("OutputSpace")
+render0 = NodePath("Render0")
+render1 = NodePath("Render1")
+render2 = NodePath("Render2")
+render3 = NodePath("Render3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_riie8")
 
-[node name="InputSpace" type="Node2D" parent="."]
-position = Vector2(-4, 0)
+[node name="Render0" type="Node2D" parent="."]
+position = Vector2(0, -4)
 
-[node name="OutputSpace" type="Node2D" parent="."]
+[node name="Render1" type="Node2D" parent="."]
 position = Vector2(4, 0)
+
+[node name="Render2" type="Node2D" parent="."]
+position = Vector2(0, 4)
+
+[node name="Render3" type="Node2D" parent="."]
+position = Vector2(-4, 0)

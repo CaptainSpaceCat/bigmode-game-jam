@@ -2,7 +2,6 @@ class_name MiningDrill
 extends Machine
 
 @export var generate_pos: Node2D
-@export var letterPrefab: PackedScene
 
 func _init():
 	self.discrete_shape = Vector2i.ONE*2
@@ -48,4 +47,3 @@ func perform_cycle(machine_map: Dictionary) -> void:
 				print("clearing letter :(")
 				letter.queue_free()
 			
-			pass

@@ -1,8 +1,13 @@
 class_name ConveyerBelt
 extends Machine
 
-@export var renderA: Node2D
-@export var renderB: Node2D
+@export var render0: Node2D
+@export var render1: Node2D
+@export var render2: Node2D
+@export var render3: Node2D
+
+var renderA: Node2D
+var renderB: Node2D
 
 var slotA: Letter
 var slotB: Letter
@@ -11,11 +16,16 @@ func _init() -> void:
 	self.add_input(Vector2i(-1,0), Vector2i.ZERO)
 	self.add_output(Vector2i.ZERO, Vector2i(1,0))
 
+func _ready() -> void:
+	renderA = render3
+	renderB = render1
+
+
 func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	if channel == 0:
 		if slotA == null:
 			slotA = letter
-			slotA.send_to(renderA.global_position)
+			letter.send_to(renderA.global_position)
 			return true
 	return false
 
@@ -36,3 +46,16 @@ func perform_cycle(machine_map: Dictionary) -> void:
 			slotA.send_to(renderB.global_position)
 			slotB = slotA
 			slotA = null
+
+
+func get_held_items() -> Array:
+	var items = []
+	if slotA != null:
+		items.append(slotA)
+	if slotB != null:
+		items.append(slotB)
+	return items
+
+
+func refresh_texture() -> void:
+	pass

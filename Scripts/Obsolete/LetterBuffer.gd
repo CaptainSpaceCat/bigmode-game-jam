@@ -1,31 +1,26 @@
-extends Node2D
-
 class_name LetterBuffer
+extends Object
 
 var letters: Array = []
-var blocked: bool = false
-@export var direction: int = 0
-@export var capacity: int = 1
+var capacity: int = 1
+var is_empty: bool = true
 
-var output_position: Vector2i
-
+func _init(cap: int = 1):
+	self.capacity = cap
 
 func try_append(l: Letter) -> bool:
-	if !blocked:
+	if self.count() < capacity:
 		letters.append(l)
-		if self.count() == capacity:
-			blocked = true
+		is_empty = false
 		return true
 	return false
-
 
 func count() -> int:
 	return len(self.letters)
 
-
 func dequeue() -> Letter:
-	var l = ""
 	if self.count() > 0:
-		l = letters[0]
-		letters.remove_at(0)
-	return l
+		return letters.pop_at(0)
+	else:
+		self.is_empty = true
+	return Letter.new()

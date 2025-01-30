@@ -13,6 +13,8 @@ var machine_shapes: Array[Vector2i] = []
 # the machine type we have selected currently
 var selected_machine_index: int = -1
 
+var previous_belt: ConveyerBelt
+
 
 func _ready():
 	# read machine data from temporary prefab instances
@@ -27,6 +29,7 @@ func _ready():
 			temp_instance.queue_free()
 	print(machine_shapes)
 
+
 func _process(delta):
 	# Request a redraw to update debug visuals
 	if debug_mode:
@@ -37,6 +40,13 @@ func _process(delta):
 		if selected_machine_index > -1:
 			var pos = snap_to_grid(get_global_mouse_position())
 			var bounds = machine_shapes[selected_machine_index]
+			
+			# If we're placing conveyer belts, we need to follow a more specific set of rules
+			if selected_machine_index == 0:
+				if previous_belt != null:
+					pass # TODO make the previous belt rotate to face this one if needed
+	
+			# Any other machine is easy
 			if machineManager.is_area_clear(pos, bounds):
 				place_machine(selected_machine_index, pos)
 	
@@ -45,6 +55,8 @@ func _process(delta):
 		var pos = snap_to_grid(get_global_mouse_position())
 		var machine = machineManager.get_machine(pos)
 		if machine != null:
+			for item: Letter in machine.get_held_items():
+				item.queue_free()
 			machineManager.unregister_machine(machine)
 			machine.queue_free()
 
@@ -127,4 +139,3 @@ func _draw():
 					var snapped_pos = Vector2(snap_to_grid(mouse_pos)) * GRID_SIZE + Vector2.ONE * GRID_SIZE/2
 					# Draw a red dot at the center of the snapped grid cell
 					draw_circle(snapped_pos + Vector2(x, y) * GRID_SIZE, 5, Color(1, 0, 0.4, 0.5))
-
