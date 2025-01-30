@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2renfhq6jpy8"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/MiningDrill.gd" id="1_y23cw"]
+[ext_resource type="PackedScene" uid="uid://b1xcupuafmpwx" path="res://Prefabs/letter.tscn" id="2_5yvh8"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_tlr4t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dijo"]
+atlas = ExtResource("2_tlr4t")
+region = Rect2(0, 0, 32, 32)
+
+[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos")]
+script = ExtResource("1_y23cw")
+generate_pos = NodePath("OutputSlot")
+letterPrefab = ExtResource("2_5yvh8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_4dijo")
+
+[node name="OutputSlot" type="Node2D" parent="."]
+position = Vector2(16, 0)

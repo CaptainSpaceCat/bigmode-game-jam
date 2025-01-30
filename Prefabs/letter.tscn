@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1xcupuafmpwx"]
+
+[ext_resource type="Script" path="res://Scripts/Letter.gd" id="1_v2heo"]
+[ext_resource type="Texture2D" uid="uid://c5dp82c7gdipv" path="res://icon.svg" id="2_rrcmj"]
+
+[sub_resource type="Theme" id="Theme_rcmrx"]
+default_font_size = 49
+
+[node name="Letter" type="Node2D" node_paths=PackedStringArray("text_label")]
+position = Vector2(36, 8)
+script = ExtResource("1_v2heo")
+text_label = NodePath("RichTextLabel")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("2_rrcmj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -7.0
+offset_right = 57.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+theme = SubResource("Theme_rcmrx")
+theme_override_colors/default_color = Color(0.8, 0.176471, 0, 1)
+scroll_active = false
+autowrap_mode = 0

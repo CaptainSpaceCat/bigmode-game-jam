@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgdutg52x26go"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/ConveyerBelt.gd" id="1_j6j8e"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_6i4g8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_riie8"]
+atlas = ExtResource("2_6i4g8")
+region = Rect2(0, 80, 16, 16)
+
+[node name="ConveyerStraight" type="Node2D" node_paths=PackedStringArray("renderA", "renderB")]
+script = ExtResource("1_j6j8e")
+renderA = NodePath("InputSpace")
+renderB = NodePath("OutputSpace")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_riie8")
+
+[node name="InputSpace" type="Node2D" parent="."]
+position = Vector2(-4, 0)
+
+[node name="OutputSpace" type="Node2D" parent="."]
+position = Vector2(4, 0)
