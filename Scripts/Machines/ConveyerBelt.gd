@@ -1,10 +1,7 @@
 class_name ConveyerBelt
 extends Machine
 
-@export var render0: Node2D
-@export var render1: Node2D
-@export var render2: Node2D
-@export var render3: Node2D
+@export var item_render_positions: Array[Node2D]
 
 var renderA: Node2D
 var renderB: Node2D
@@ -17,9 +14,30 @@ func _init() -> void:
 	self.add_output(Vector2i.ZERO, Vector2i(1,0))
 
 func _ready() -> void:
-	renderA = render3
-	renderB = render1
+	renderA = item_render_positions[3]
+	renderB = item_render_positions[1]
 
+func change_output(out_world_pos: Vector2i):
+	var out_pos = self.grid_to_local(out_world_pos)
+	self.clear_outputs()
+	self.add_output(Vector2i.ZERO, out_pos)
+	
+	var dir = self.get_relative_direction(Vector2i.ZERO, out_pos)
+	if dir >= 0:
+		renderB = item_render_positions[dir]
+		if debug_enabled:
+			queue_redraw()
+
+func change_input(in_world_pos: Vector2i):
+	var in_pos = self.grid_to_local(in_world_pos)
+	self.clear_inputs()
+	self.add_input(in_pos, Vector2i.ZERO)
+	
+	var dir = self.get_relative_direction(Vector2i.ZERO, in_pos)
+	if dir >= 0:
+		renderA = item_render_positions[dir]
+		if debug_enabled:
+			queue_redraw()
 
 func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	if channel == 0:
@@ -59,3 +77,9 @@ func get_held_items() -> Array:
 
 func refresh_texture() -> void:
 	pass
+
+func _draw():
+	if debug_enabled:
+		draw_circle(renderA.position, 3, Color(0.1, 1, 0.2, 0.5))
+		draw_circle(renderB.position, 3, Color(1, 0.2, 0, 0.5))
+		

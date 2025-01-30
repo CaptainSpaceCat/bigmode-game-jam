@@ -7,6 +7,16 @@ var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
 var locked_by_default: bool = false
 var letterPrefab: PackedScene = preload("res://Prefabs/letter.tscn")
 
+@export var debug_enabled: bool = false
+
+func _process(delta):
+	if debug_enabled:
+		queue_redraw()
+
+# accepts a vector2i position on the world grid
+# returns the same vector relative to this machine's origin
+func grid_to_local(pos: Vector2i) -> Vector2i:
+	return pos - discrete_position
 
 # Check whether the inserted IO will be accepted by this machine
 func can_accept_input(from: Vector2i, to: Vector2i) -> bool:
@@ -17,6 +27,13 @@ func can_accept_input(from: Vector2i, to: Vector2i) -> bool:
 			return true
 	return false
 
+func can_provide_output(from: Vector2i, to: Vector2i) -> bool:
+	for io in output_array:
+		# our saved IOs are relative to the center of this machine
+		# we need to add discrete_position to be able to compare to another machine's IO
+		if io.from + discrete_position == from and io.to + discrete_position == to:
+			return true
+	return false
 
 # Function for passing letters into a machine
 # returns true if the machine successfully accepts a letter from the specified source
@@ -27,6 +44,15 @@ func try_accept_input(from: Vector2i, to: Vector2i, letter: Letter) -> bool:
 		# we need to add discrete_position to be able to compare to another machine's IO
 		if io.from + discrete_position == from and io.to + discrete_position == to:
 			return send_letter_to_channel(i, letter)
+	return false
+
+
+func try_send_to_output(machine_map: Dictionary, letter: Letter, index: int = 0) -> bool:
+	var io: MachineIO = self.get_output(index)
+	if io.to in machine_map.keys():
+		var other_machine: Machine = machine_map[io.to]
+		if other_machine.can_accept_input(io.from, io.to):
+			return other_machine.try_accept_input(io.from, io.to, letter)
 	return false
 
 
@@ -85,3 +111,16 @@ func get_output(index: int) -> MachineIO:
 
 func get_item_parent():
 	return get_node("../../ItemManager")
+
+
+func get_relative_direction(from: Vector2i, to: Vector2i) -> int:
+	var diff = to - from
+	if diff == Vector2i.UP:
+		return 0
+	elif diff == Vector2i.RIGHT:
+		return 1
+	elif diff == Vector2i.DOWN:
+		return 2
+	elif diff == Vector2i.LEFT:
+		return 3
+	return -1

@@ -24,6 +24,7 @@ var letter_in_input: Letter
 
 func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	if channel == 0 && !blocked:
+		#print("Recieved letter: ", letter.content)
 		if letter.content == "": # EOF
 			if len(output_buffer) > 0:
 				blocked = true
@@ -43,38 +44,51 @@ func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 
 
 func perform_cycle(machine_map: Dictionary) -> void:
+	#print("input buffer: " + input_buffer + ", output buffer: " + output_buffer)
+	# Choose the next letter to output
+	var l = "" # Defaults to EOF
 	if len(output_buffer) > 0:
-		# Choose the next letter to output
-		var l = "" # Defaults to EOF
 		if output_index >= len(output_buffer):
 			if blocked:
 				output_buffer = input_buffer
 				input_buffer = ""
 				blocked = false
 			else:
+				var eof = self.create_letter("", outputSlotA.global_position)
+				if not self.try_send_letter(machine_map, eof, 1):
+					# if we happen to fail to send out the EOF, this will block the machine, so we must return
+					return
+				
 				output_buffer = ""
+				output_index = 0
+				
 		else:
 			l = output_buffer[output_index]
-			
+	
+	if len(output_buffer) > 0: # if it's still 0 after the above check
+		# Default to output A
 		var output_choice = 0
 		var output_pos = outputSlotA.global_position
-		if output_index >= slice_index:
+		if output_index == len(output_buffer) - slice_index:
+			# edge case where we are, this tick, sending the next letter to output B
+			# IE we have just begun the slice
+			# in this situation, we need to also send out another EOF letter to output A on the same tick
+			var eof = self.create_letter("", outputSlotA.global_position)
+			if not self.try_send_letter(machine_map, eof, 0):
+				# if we happen to fail to send out the EOF, this will block the machine, so we must return
+				return
+		# If we're past the slice, send to output B
+		if output_index >= len(output_buffer) - slice_index:
 			output_choice = 1
 			output_pos = outputSlotB.global_position
 			
 		var new_letter: Letter = self.create_letter(l, output_pos)
-		print(new_letter)
-		if try_send_to_output(machine_map, new_letter, output_choice):
+		if try_send_letter(machine_map, new_letter, output_choice):
 			output_index += 1
-		else:
-			new_letter.queue_free()
 
 
-func try_send_to_output(machine_map: Dictionary, letter: Letter, index: int = 0) -> bool:
-	var io: MachineIO = self.get_output(index)
-	if io.to in machine_map.keys():
-		var other_machine: Machine = machine_map[io.to]
-		if other_machine.can_accept_input(io.from, io.to):
-			return other_machine.try_accept_input(io.from, io.to, letter)
+func try_send_letter(machine_map: Dictionary, new_letter: Letter, output_channel: int) -> bool:
+	if self.try_send_to_output(machine_map, new_letter, output_channel):
+		return true
+	new_letter.queue_free()
 	return false
-				

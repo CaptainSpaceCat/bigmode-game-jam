@@ -11,6 +11,9 @@ var word: String = "COPPER"
 var index: int = 0
 var post_delay_cycles: int = 8
 
+func set_word(new_word: String):
+	self.word = new_word
+
 func perform_cycle(machine_map: Dictionary) -> void:
 	var io: MachineIO = self.get_output(0)
 	if io.to in machine_map.keys():
@@ -23,9 +26,8 @@ func perform_cycle(machine_map: Dictionary) -> void:
 			if index >= 0 and index < len(word):
 				var l = word[len(word) - index - 1]
 				letter.set_letter(l)
-				print("Creating letter", l)
 			elif index == len(word):
-				print("Creating letter: EOF")
+				pass # do nothing, the letter object is EOF by default so it'll get sent properly
 			elif index < len(word) + post_delay_cycles:
 				# if we've fully finished the word, and we're still in the delay cycles,
 				# do nothing and skip to the next cycle
@@ -44,6 +46,7 @@ func perform_cycle(machine_map: Dictionary) -> void:
 			if other_machine.try_accept_input(io.from, io.to, letter):
 				index += 1
 			else:
-				print("clearing letter :(")
+				# TODO make the letter just sit there until there's space for it to move,
+				# rather than repeatedly creating and destroying them until there's space
 				letter.queue_free()
 			

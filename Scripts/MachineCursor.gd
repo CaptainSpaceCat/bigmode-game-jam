@@ -13,7 +13,8 @@ var machine_shapes: Array[Vector2i] = []
 # the machine type we have selected currently
 var selected_machine_index: int = -1
 
-var previous_belt: ConveyerBelt
+# start previous belt pos as 1000 blocks away so its basically unreachable until player places belts
+var previous_belt_pos: Vector2i = Vector2i.ONE * 1000
 
 
 func _ready():
@@ -29,29 +30,65 @@ func _ready():
 			temp_instance.queue_free()
 	print(machine_shapes)
 
+var previous_mouse_drag_pos: Vector2i = Vector2i.ONE * 10000
 
 func _process(delta):
 	# Request a redraw to update debug visuals
 	if debug_mode:
 		queue_redraw()
 	
+	# Reset drag tracking if we release the LMB
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		previous_mouse_drag_pos = Vector2i.ONE * 10000
+		
 	# Handle left clicking to place machines
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		if selected_machine_index > -1:
-			var pos = snap_to_grid(get_global_mouse_position())
+		var pos = snap_to_grid(get_global_mouse_position())
+		if selected_machine_index > -1 and pos != previous_mouse_drag_pos:
+			previous_mouse_drag_pos = pos
 			var bounds = machine_shapes[selected_machine_index]
 			
-			# If we're placing conveyer belts, we need to follow a more specific set of rules
+			# If we're placing conveyer belts, do additional checks
 			if selected_machine_index == 0:
-				if previous_belt != null:
-					pass # TODO make the previous belt rotate to face this one if needed
-	
-			# Any other machine is easy
+				if (previous_belt_pos - pos).length() == 1:
+					# Make the previous belt rotate to face this one if needed
+					var belt: ConveyerBelt = machineManager.get_machine(previous_belt_pos)
+					if belt != null:
+						belt.change_output(pos)
+				
+				# If the machine we're clicking on is itself a conveyer belt,
+				# we delete the existing one and let a new one replace it,
+				# this time facing the direction of the current mouse drag
+				var existing_machine = machineManager.get_machine(pos)
+				if existing_machine != null and existing_machine is ConveyerBelt:
+					print("Overwriting belt at: ", existing_machine.discrete_position)
+					machineManager.unregister_machine(existing_machine)
+					existing_machine.queue_free()
+			
+			# Check to see if the new machine will fit, and if so, place it
 			if machineManager.is_area_clear(pos, bounds):
-				place_machine(selected_machine_index, pos)
+				var new_machine = place_machine(selected_machine_index, pos)
+				# If we just placed a conveyer belt, keep track of where the last placed one is
+				if selected_machine_index == 0:
+					var belt: ConveyerBelt = new_machine
+					if (previous_belt_pos - pos).length() == 1:
+						belt.change_input(previous_belt_pos)
+						belt.change_output(pos - previous_belt_pos + pos)
+					else:
+						# TODO check surrounding tiles to see if any have an output
+						# if so, prioritize facing this conveyer's input towards that output
+						for offset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
+							var machine = machineManager.get_machine(pos + offset)
+							if machine != null and machine.can_provide_output(pos + offset, pos):
+								belt.change_input(pos + offset)
+								break
+					previous_belt_pos = pos
+					
+					
 	
 	# Handle right clicking to remove machines
 	elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		previous_belt_pos = Vector2i.ONE * 10000
 		var pos = snap_to_grid(get_global_mouse_position())
 		var machine = machineManager.get_machine(pos)
 		if machine != null:
@@ -61,16 +98,18 @@ func _process(delta):
 			machine.queue_free()
 
 
-func place_machine(index: int, pos_index: Vector2i):
+func place_machine(index: int, pos_index: Vector2i) -> Machine:
 	var prefab = available_machines[index].instantiate()
 	prefab.discrete_position = pos_index
-	print("Creating prefab:", prefab.name)
+	#print("Creating prefab:", prefab.name)
 	add_child(prefab)
 	
 	# assume center of prefab is in the center of a grid position
 	prefab.position = Vector2(pos_index) * GRID_SIZE + Vector2.ONE * GRID_SIZE/2 # thus we add half a tile
-	
+	# Register the machine to the machine_map
 	machineManager.register_machine(pos_index, prefab)
+	# return a reference to this machine in case it's needed
+	return prefab
 
 
 func clear_machine(pos: Vector2i):
