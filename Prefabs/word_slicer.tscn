@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://8jgrnldd5nlg"]
+[gd_scene load_steps=6 format=3 uid="uid://8jgrnldd5nlg"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/WordSlicer.gd" id="1_2bk1r"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_lbsri"]
+[ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_o32vy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f5hre"]
 atlas = ExtResource("2_lbsri")
@@ -10,11 +11,11 @@ region = Rect2(0, 32, 32, 16)
 [sub_resource type="Theme" id="Theme_cgwgo"]
 default_font_size = 55
 
-[node name="WordSlicer" type="Node2D" node_paths=PackedStringArray("inputSlotA", "outputSlotA", "outputSlotB")]
+[node name="WordSlicer" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferOutA", "bufferOutB")]
 script = ExtResource("1_2bk1r")
-inputSlotA = NodePath("InputSlot")
-outputSlotA = NodePath("OutputSlotA")
-outputSlotB = NodePath("OutputSlotB")
+bufferInA = NodePath("InputSlot")
+bufferOutA = NodePath("OutputSlotA")
+bufferOutB = NodePath("OutputSlotB")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(8, 0)
@@ -39,9 +40,12 @@ scroll_active = false
 
 [node name="InputSlot" type="Node2D" parent="."]
 position = Vector2(-4, 0)
+script = ExtResource("3_o32vy")
 
 [node name="OutputSlotA" type="Node2D" parent="."]
 position = Vector2(20, 0)
+script = ExtResource("3_o32vy")
 
 [node name="OutputSlotB" type="Node2D" parent="."]
 position = Vector2(16, 4)
+script = ExtResource("3_o32vy")

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfmflnlr0fny3"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/WordMerger.gd" id="1_k1uqs"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_fwylc"]
+[ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_8qes7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tm8q"]
+atlas = ExtResource("2_fwylc")
+region = Rect2(0, 48, 16, 32)
+
+[node name="WordMerger" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferInB", "bufferOutA")]
+script = ExtResource("1_k1uqs")
+bufferInA = NodePath("InputBufferA")
+bufferInB = NodePath("InputBufferB")
+bufferOutA = NodePath("OutputBufferA")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = SubResource("AtlasTexture_4tm8q")
+
+[node name="InputBufferA" type="Node2D" parent="."]
+position = Vector2(-4, 0)
+script = ExtResource("3_8qes7")
+
+[node name="InputBufferB" type="Node2D" parent="."]
+position = Vector2(-4, 16)
+script = ExtResource("3_8qes7")
+
+[node name="OutputBufferA" type="Node2D" parent="."]
+position = Vector2(4, 0)
+script = ExtResource("3_8qes7")

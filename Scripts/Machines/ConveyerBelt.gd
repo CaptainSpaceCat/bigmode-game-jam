@@ -22,6 +22,11 @@ func change_output(out_world_pos: Vector2i):
 	self.clear_outputs()
 	self.add_output(Vector2i.ZERO, out_pos)
 	
+	if self.get_input(0).from == out_world_pos:
+		# We just set the output to the same side as the input
+		# Assume we set the output for a reason, so move the input
+		self.change_input(discrete_position - out_pos)
+	
 	var dir = self.get_relative_direction(Vector2i.ZERO, out_pos)
 	if dir >= 0:
 		renderB = item_render_positions[dir]
@@ -32,6 +37,12 @@ func change_input(in_world_pos: Vector2i):
 	var in_pos = self.grid_to_local(in_world_pos)
 	self.clear_inputs()
 	self.add_input(in_pos, Vector2i.ZERO)
+	
+	
+	if self.get_output(0).to == in_world_pos:
+		# We just set the input to the same side as the output
+		# Assume we set the input for a reason, so move the output
+		self.change_output(discrete_position - in_pos)
 	
 	var dir = self.get_relative_direction(Vector2i.ZERO, in_pos)
 	if dir >= 0:
@@ -80,6 +91,6 @@ func refresh_texture() -> void:
 
 func _draw():
 	if debug_enabled:
-		draw_circle(renderA.position, 3, Color(0.1, 1, 0.2, 0.5))
-		draw_circle(renderB.position, 3, Color(1, 0.2, 0, 0.5))
+		draw_circle(renderA.position, 3, Color(0.1, 1, 0.2, 0.2))
+		draw_circle(renderB.position, 3, Color(1, 0.2, 0, 0.2))
 		

@@ -75,7 +75,7 @@ func _process(delta):
 						belt.change_input(previous_belt_pos)
 						belt.change_output(pos - previous_belt_pos + pos)
 					else:
-						# TODO check surrounding tiles to see if any have an output
+						# Check surrounding tiles to see if any have an output
 						# if so, prioritize facing this conveyer's input towards that output
 						for offset in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
 							var machine = machineManager.get_machine(pos + offset)
@@ -171,10 +171,15 @@ func _draw():
 			# Get mouse position in world space
 			var mouse_pos = get_global_mouse_position()
 			var bounds = machine_shapes[selected_machine_index]
+			var grid_pos = snap_to_grid(mouse_pos)
 			
 			for x in range(bounds.x):
 				for y in range(bounds.y):
+					var chosen_color = Color(1, 0, 0.4, 0.5)
+					var m = machineManager.get_machine(grid_pos + Vector2i(x, y))
+					if m == null or (selected_machine_index == 0 and m is ConveyerBelt):
+						chosen_color = Color(0.2, 0.5, 1, 0.5)
 					# Snap mouse position to grid
-					var snapped_pos = Vector2(snap_to_grid(mouse_pos)) * GRID_SIZE + Vector2.ONE * GRID_SIZE/2
+					var snapped_pos = (Vector2(grid_pos) + Vector2(x, y)) * GRID_SIZE + Vector2.ONE * GRID_SIZE/2
 					# Draw a red dot at the center of the snapped grid cell
-					draw_circle(snapped_pos + Vector2(x, y) * GRID_SIZE, 5, Color(1, 0, 0.4, 0.5))
+					draw_circle(snapped_pos, 5, chosen_color)

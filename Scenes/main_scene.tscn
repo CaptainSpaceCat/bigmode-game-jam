@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://cb7b13t8s4p26"]
+[gd_scene load_steps=13 format=3 uid="uid://cb7b13t8s4p26"]
 
 [ext_resource type="Texture2D" uid="uid://br8ruipm44ww" path="res://Textures/background_quick.png" id="1_rrgag"]
 [ext_resource type="Texture2D" uid="uid://cnp1prfa4qnli" path="res://Textures/ores_quick.png" id="2_54n11"]
 [ext_resource type="Script" path="res://Scripts/MachineCursor.gd" id="5_1xqk8"]
-[ext_resource type="PackedScene" uid="uid://cgdutg52x26go" path="res://Prefabs/conveyer_straight.tscn" id="5_p4hs3"]
+[ext_resource type="PackedScene" uid="uid://cgdutg52x26go" path="res://Prefabs/conveyer_belt.tscn" id="5_p4hs3"]
 [ext_resource type="PackedScene" uid="uid://b2renfhq6jpy8" path="res://Prefabs/mining_drill.tscn" id="6_cgt2o"]
 [ext_resource type="PackedScene" uid="uid://8jgrnldd5nlg" path="res://Prefabs/word_slicer.tscn" id="6_kyntq"]
 [ext_resource type="Script" path="res://Scripts/MachineManager.gd" id="6_n1tf0"]
+[ext_resource type="PackedScene" uid="uid://cfmflnlr0fny3" path="res://Prefabs/word_merger.tscn" id="8_m13vn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7ctax"]
 texture = ExtResource("1_rrgag")
@@ -25,7 +26,7 @@ sources/0 = SubResource("TileSetAtlasSource_dqe5w")
 [node name="Main Scene" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(3.5, 3.5)
 
 [node name="BackgroundTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_uw64e")
@@ -37,13 +38,14 @@ tile_set = SubResource("TileSet_3f3js")
 format = 2
 layer_0/tile_data = PackedInt32Array(262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 327686, 0, 0, 393222, 0, 0, 458758, 0, 0, 327687, 0, 0, 393223, 0, 0, 458759, 0, 0, 0, 0, 0, -1, 0, 0)
 
-[node name="MachineCursor" type="Node2D" parent="." node_paths=PackedStringArray("machineManager")]
-script = ExtResource("5_1xqk8")
-machineManager = NodePath("../MachineManager")
-available_machines = Array[PackedScene]([ExtResource("5_p4hs3"), ExtResource("6_cgt2o"), ExtResource("6_kyntq")])
-
 [node name="MachineManager" type="Node2D" parent="."]
 script = ExtResource("6_n1tf0")
 tick_interval = 0.5
 
 [node name="ItemManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="MachineCursor" type="Node2D" parent="." node_paths=PackedStringArray("machineManager")]
+script = ExtResource("5_1xqk8")
+machineManager = NodePath("../MachineManager")
+available_machines = Array[PackedScene]([ExtResource("5_p4hs3"), ExtResource("6_cgt2o"), ExtResource("6_kyntq"), ExtResource("8_m13vn")])

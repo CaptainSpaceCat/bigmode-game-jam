@@ -5,7 +5,6 @@ var update_flag: bool = false
 var discrete_position: Vector2i  # World grid position of the machine
 var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
 var locked_by_default: bool = false
-var letterPrefab: PackedScene = preload("res://Prefabs/letter.tscn")
 
 @export var debug_enabled: bool = false
 
@@ -61,18 +60,27 @@ func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	return false
 
 
-func create_letter(l: String, pos: Vector2) -> Letter:
-	var letter: Letter = letterPrefab.instantiate()
-	letter.set_letter(l)
-	letter.global_position = pos
-	# Add to scene tree, parented to the ItemManager node
-	get_item_parent().add_child(letter)
-	return letter
-
-
 # This should get overridden in derived classes to customize the machine's cycle
 func perform_cycle(machine_map: Dictionary) -> void:
 	pass
+
+func process_output_buffer(machine_map: Dictionary, index: int, buffer: LetterBuffer):
+	if buffer.is_full:
+		buffer.dequeue_to_hand()
+	
+	var io: MachineIO = self.get_output(index)
+	# If there's a machine at the output...
+	if io.to in machine_map.keys():
+		var other_machine: Machine = machine_map[io.to]
+		# ... and that machine has a corresponding input...
+		if other_machine.can_accept_input(io.from, io.to):
+			# ... and our output buffer is holding a letter ...
+			if buffer.held_letter != null:
+				# ... and the other machine accepts the letter ...
+				if other_machine.try_accept_input(io.from, io.to, buffer.held_letter):
+					# ... the letter has been taken in by the other machine,
+					# we can delete our buffer's reference
+					buffer.clear_held_letter()
 
 func get_held_items() -> Array:
 	return []
@@ -107,10 +115,6 @@ func get_input(index: int) -> MachineIO:
 func get_output(index: int) -> MachineIO:
 	var local = output_array[index]
 	return MachineIO.new(local.from + discrete_position, local.to + discrete_position)
-
-
-func get_item_parent():
-	return get_node("../../ItemManager")
 
 
 func get_relative_direction(from: Vector2i, to: Vector2i) -> int:
