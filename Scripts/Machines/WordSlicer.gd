@@ -5,7 +5,7 @@ extends Machine
 @export var bufferOutA: LetterBuffer
 @export var bufferOutB: LetterBuffer
 
-var slice_index = 3
+var slice_index = 1
 
 func _init():
 	self.discrete_shape = Vector2i(2,1)

@@ -63,6 +63,8 @@ func _process(delta):
 				if existing_machine != null and existing_machine is ConveyerBelt:
 					#print("Overwriting belt at: ", existing_machine.discrete_position)
 					machineManager.unregister_machine(existing_machine)
+					for letter: Letter in existing_machine.get_held_items():
+						letter.queue_free()
 					existing_machine.queue_free()
 			
 			# Check to see if the new machine will fit, and if so, place it

@@ -35,7 +35,8 @@ func try_apply_string(word: String) -> bool:
 	if is_full:
 		return false
 	content = word
-	is_full = true
+	if len(content) > 0:
+		is_full = true
 	return true
 
 func count() -> int:
