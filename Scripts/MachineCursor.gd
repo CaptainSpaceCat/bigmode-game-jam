@@ -61,7 +61,7 @@ func _process(delta):
 				# this time facing the direction of the current mouse drag
 				var existing_machine = machineManager.get_machine(pos)
 				if existing_machine != null and existing_machine is ConveyerBelt:
-					print("Overwriting belt at: ", existing_machine.discrete_position)
+					#print("Overwriting belt at: ", existing_machine.discrete_position)
 					machineManager.unregister_machine(existing_machine)
 					existing_machine.queue_free()
 			

@@ -89,8 +89,33 @@ func get_held_items() -> Array:
 func refresh_texture() -> void:
 	pass
 
+@export var spriteStraight: Sprite2D
+@export var spriteBent: Sprite2D
+
 func _draw():
 	if debug_enabled:
 		draw_circle(renderA.position, 3, Color(0.1, 1, 0.2, 0.2))
 		draw_circle(renderB.position, 3, Color(1, 0.2, 0, 0.2))
+	
+	# Set the texture and orientation based on outputs
+	var in_dir = self.get_relative_direction(Vector2i.ZERO, self.input_array[0].from)
+	var out_dir = self.get_relative_direction(Vector2i.ZERO, self.output_array[0].to)
+	
+	var diff = abs(in_dir - out_dir)
+	if diff == 2: # conveyer is straight
+		spriteStraight.rotation = PI/2 * in_dir
+		spriteStraight.visible = true
+		spriteBent.visible = false
+	elif diff == 1 or diff == 3: # conveyer is bent
+		spriteBent.rotation = PI/2 * in_dir
+		spriteStraight.visible = false
+		spriteBent.visible = true
 		
+		# Just trust me, it works
+		spriteBent.flip_h = (in_dir + 3) % 4 == out_dir
+	else:
+		printerr("Conveyer fold error")
+	
+	
+	
+	

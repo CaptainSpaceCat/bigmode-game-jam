@@ -29,7 +29,6 @@ func perform_cycle(machine_map: Dictionary) -> void:
 		# Prepend spaces to slice_B equal to the number of letters in slice_A
 		# This will cause the B output buffer to wait that number of machine ticks before outputting
 		slice_B = " ".repeat(len(slice_A)) + slice_B
-		print(slice_A, ":", slice_B)
 		bufferOutA.try_apply_string(slice_A)
 		bufferOutB.try_apply_string(slice_B)
 
