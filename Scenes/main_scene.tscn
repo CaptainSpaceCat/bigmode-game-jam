@@ -40,7 +40,7 @@ layer_0/tile_data = PackedInt32Array(262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 2
 
 [node name="MachineManager" type="Node2D" parent="."]
 script = ExtResource("6_n1tf0")
-tick_interval = 0.5
+tick_interval = 0.2
 
 [node name="MachineCursor" type="Node2D" parent="." node_paths=PackedStringArray("machineManager")]
 script = ExtResource("5_1xqk8")

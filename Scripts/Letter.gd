@@ -5,7 +5,7 @@ class_name Letter
 var content: String = "" # Defaults to "", the EOF object for words
 @export var text_label: RichTextLabel
 @export var text_background: RichTextLabel
-const animation_duration: float = 0.5
+@onready var machineManager: MachineManager = get_node("/root/Main Scene/MachineManager")
 
 func set_letter(content: String) -> void:
 	if len(content) >= 1:
@@ -25,4 +25,4 @@ func value() -> String:
 
 func send_to(pos: Vector2i) -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", Vector2(pos), animation_duration).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(self, "global_position", Vector2(pos), machineManager.tick_interval).set_trans(Tween.TRANS_QUAD)
