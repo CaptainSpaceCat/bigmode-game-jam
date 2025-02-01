@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dxfuicwq6b48y"]
+
+[ext_resource type="Shader" path="res://Shaders/radial_cutoff.gdshader" id="1_6ns6s"]
+
+[resource]
+shader = ExtResource("1_6ns6s")
+shader_parameter/progress = 1.0
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/start_angle = 0.0
+shader_parameter/clockwise = false

@@ -46,7 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.2, 0.2)
 theme = SubResource("Theme_rcmrx")
-theme_override_colors/default_color = Color(0.8, 0.176471, 0, 1)
+theme_override_colors/default_color = Color(1, 0.105558, 0.301168, 1)
 scroll_active = false
 autowrap_mode = 0
 

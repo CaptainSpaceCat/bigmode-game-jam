@@ -5,6 +5,7 @@ var update_flag: bool = false
 var discrete_position: Vector2i  # World grid position of the machine
 var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
 var locked_by_default: bool = false
+var is_destructible: bool = true
 
 @export var debug_enabled: bool = false
 
@@ -60,6 +61,9 @@ func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	return false
 
 
+func handle_key_press(key: int):
+	pass
+
 # This should get overridden in derived classes to customize the machine's cycle
 func perform_cycle(machine_map: Dictionary) -> void:
 	pass
@@ -84,6 +88,11 @@ func process_output_buffer(machine_map: Dictionary, index: int, buffer: LetterBu
 
 func get_held_items() -> Array:
 	return []
+
+func _exit_tree():
+	for item in get_held_items():
+		item.queue_free()	
+
 
 # Store and retrieve IO objects
 

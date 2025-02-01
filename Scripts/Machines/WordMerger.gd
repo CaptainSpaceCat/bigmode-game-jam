@@ -32,6 +32,11 @@ func perform_cycle(machine_map: Dictionary) -> void:
 
 
 func get_held_items() -> Array:
-	if bufferOutA.held_letter != null:
-		return [bufferOutA.held_letter]
-	return []
+	var items = []
+	for item in bufferInA.get_held_items():
+		items.append(item)
+	for item in bufferInB.get_held_items():
+		items.append(item)
+	for item in bufferOutA.get_held_items():
+		items.append(item)
+	return items

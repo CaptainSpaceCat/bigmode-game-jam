@@ -7,6 +7,7 @@ var machine_map: Dictionary = {}
 
 var cumulative_time: float = 0
 @export var tick_interval: float = 1
+const GRID_SIZE = 16
 
 func _process(delta):
 	cumulative_time += delta
@@ -42,6 +43,13 @@ func is_area_clear(pos: Vector2i, bounds: Vector2i) -> bool:
 			if key in machine_map.keys():
 				return false
 	return true
+
+# Snap a global position to the nearest grid index
+func snap_to_grid(pos: Vector2) -> Vector2i:
+	return Vector2i(
+		floor(pos.x / GRID_SIZE),
+		floor(pos.y / GRID_SIZE)
+	)
 
 func update_all_machines() -> void:
 	for m in machine_map.values():

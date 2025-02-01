@@ -72,3 +72,11 @@ func pop_serialize() -> String:
 	content = ""
 	is_full = false
 	return out
+
+func get_held_items() -> Array:
+	var items = []
+	if held_letter != null:
+		items.append(held_letter)
+	if queue_delete != null:
+		items.append(queue_delete)
+	return items

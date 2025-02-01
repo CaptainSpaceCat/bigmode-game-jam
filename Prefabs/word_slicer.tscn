@@ -11,11 +11,12 @@ region = Rect2(0, 32, 32, 16)
 [sub_resource type="Theme" id="Theme_cgwgo"]
 default_font_size = 55
 
-[node name="WordSlicer" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferOutA", "bufferOutB")]
+[node name="WordSlicer" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferOutA", "bufferOutB", "numberLabel")]
 script = ExtResource("1_2bk1r")
 bufferInA = NodePath("InputSlot")
 bufferOutA = NodePath("OutputSlotA")
 bufferOutB = NodePath("OutputSlotB")
+numberLabel = NodePath("RichTextLabel")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(8, 0)

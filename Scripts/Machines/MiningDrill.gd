@@ -8,7 +8,7 @@ func _init():
 	self.discrete_shape = Vector2i.ONE*2
 	self.add_output(Vector2i(1,0), Vector2i(2,0))
 	
-var word: String = "COPPER"
+var word: String = ""
 var cycle_index: int = 1000 # Start out ready to dump ores immediately
 var delay_cycles: int = 8
 

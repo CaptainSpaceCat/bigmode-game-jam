@@ -5,6 +5,8 @@ extends Machine
 @export var bufferOutA: LetterBuffer
 @export var bufferOutB: LetterBuffer
 
+@export var numberLabel: RichTextLabel
+
 var slice_index = 1
 
 func _init():
@@ -24,8 +26,9 @@ func perform_cycle(machine_map: Dictionary) -> void:
 	#print("input buffer: " + input_buffer + ", output buffer: " + output_buffer)
 	if bufferInA.is_full and not (bufferOutA.is_full or bufferOutB.is_full):
 		var word = bufferInA.pop_serialize()
-		var slice_B = word.substr(len(word) - slice_index)
-		var slice_A = word.substr(0, len(word) - slice_index)
+		var effective_slice_index = clampi(slice_index, 1, len(word)-1)
+		var slice_A = word.substr(len(word) - effective_slice_index)
+		var slice_B = word.substr(0, len(word) - effective_slice_index)
 		# Prepend spaces to slice_B equal to the number of letters in slice_A
 		# This will cause the B output buffer to wait that number of machine ticks before outputting
 		slice_B = " ".repeat(len(slice_A)) + slice_B
@@ -37,8 +40,21 @@ func perform_cycle(machine_map: Dictionary) -> void:
 
 func get_held_items() -> Array:
 	var items = []
-	if bufferOutA.held_letter != null:
-		items.append(bufferOutA.held_letter)
-	if bufferOutB.held_letter != null:
-		items.append(bufferOutB.held_letter)
+	for item in bufferInA.get_held_items():
+		items.append(item)
+	for item in bufferOutA.get_held_items():
+		items.append(item)
+	for item in bufferOutB.get_held_items():
+		items.append(item)
 	return items
+
+func handle_key_press(key: int):
+	if key == KEY_UP:
+		set_slice_index(slice_index+1)
+	elif key == KEY_DOWN:
+		set_slice_index(slice_index-1)
+
+func set_slice_index(index: int):
+	slice_index = clampi(index, 1, 9)
+	numberLabel.clear()
+	numberLabel.add_text(str(slice_index))

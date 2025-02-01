@@ -1,8 +1,9 @@
 extends Node2D
 
 @export var debug_mode: bool = true  # Toggle this for debug mode
-@export var machineManager: MachineManager
-const GRID_SIZE = 16
+@onready var machineManager: MachineManager = get_node("/root/Main Scene/MachineManager")
+@export var oreVeinLayer: TileMapLayer
+const GRID_SIZE = MachineManager.GRID_SIZE
 
 # which machines we have unlocked
 var machine_locks: Array[bool] = []
@@ -43,7 +44,7 @@ func _process(delta):
 		
 	# Handle left clicking to place machines
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		var pos = snap_to_grid(get_global_mouse_position())
+		var pos = machineManager.snap_to_grid(get_global_mouse_position())
 		if selected_machine_index > -1 and pos != previous_mouse_drag_pos:
 			previous_mouse_drag_pos = pos
 			var bounds = machine_shapes[selected_machine_index]
@@ -69,6 +70,19 @@ func _process(delta):
 			
 			# Check to see if the new machine will fit, and if so, place it
 			if machineManager.is_area_clear(pos, bounds):
+				# Check for ores
+				if selected_machine_index == 1: # miner
+					var ore_flag = false
+					# Check all spots under the miner for ores
+					for x in range(bounds.x):
+						for y in range(bounds.y):
+							var tile_data: TileData = oreVeinLayer.get_cell_tile_data(pos + Vector2i(x, y))
+							if tile_data != null:
+								ore_flag = true
+								break
+					if not ore_flag:
+						# if none of the spots under the miner are ores, don't allow placement
+						return
 				var new_machine = place_machine(selected_machine_index, pos)
 				# If we just placed a conveyer belt, keep track of where the last placed one is
 				if selected_machine_index == 0:
@@ -85,15 +99,13 @@ func _process(delta):
 								belt.change_input(pos + offset)
 								break
 					previous_belt_pos = pos
-					
-					
 	
 	# Handle right clicking to remove machines
 	elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		previous_belt_pos = Vector2i.ONE * 10000
-		var pos = snap_to_grid(get_global_mouse_position())
+		var pos = machineManager.snap_to_grid(get_global_mouse_position())
 		var machine = machineManager.get_machine(pos)
-		if machine != null:
+		if machine != null and machine.is_destructible:
 			for item: Letter in machine.get_held_items():
 				item.queue_free()
 			machineManager.unregister_machine(machine)
@@ -105,6 +117,14 @@ func place_machine(index: int, pos_index: Vector2i) -> Machine:
 	prefab.discrete_position = pos_index
 	#print("Creating prefab:", prefab.name)
 	add_child(prefab)
+	
+	if index == 1: # miner
+		for x in range(prefab.discrete_shape.x):
+			for y in range(prefab.discrete_shape.y):
+				var tile_data: TileData = oreVeinLayer.get_cell_tile_data(pos_index + Vector2i(x,y))
+				if tile_data != null:
+					prefab.set_word(tile_data.get_custom_data("word"))
+					break
 	
 	# assume center of prefab is in the center of a grid position
 	prefab.position = Vector2(pos_index) * GRID_SIZE + Vector2.ONE * GRID_SIZE/2 # thus we add half a tile
@@ -119,25 +139,33 @@ func clear_machine(pos: Vector2i):
 	if machine != null:
 		machineManager.unregister_machine(machine)
 
-# Snap a global position to the nearest grid index
-func snap_to_grid(pos: Vector2) -> Vector2i:
-	return Vector2i(
-		floor(pos.x / GRID_SIZE),
-		floor(pos.y / GRID_SIZE)
-	)
-
-
 # Handle input
 func _input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ESCAPE:
-			selected_machine_index = -1
-			print("Cleared machine selection")
-		elif event.pressed and event.keycode >= KEY_1 and event.keycode <= KEY_9:
-			var new_index = event.keycode - KEY_1
-			if new_index < available_machines.size() and selected_machine_index != new_index:
-				selected_machine_index = new_index
-				print("Selected machine: " + str(selected_machine_index))
+		if event.pressed:
+			if event.keycode == KEY_ESCAPE:
+				selected_machine_index = -1
+				print("Cleared machine selection")
+			elif event.keycode >= KEY_1 and event.keycode <= KEY_9:
+				var new_index = event.keycode - KEY_1
+				if new_index < available_machines.size() and selected_machine_index != new_index:
+					selected_machine_index = new_index
+					print("Selected machine: " + str(selected_machine_index))
+			else:
+				# all keys uncaught above get sent to the machine we're hovering over, if any
+				var pos = machineManager.snap_to_grid(get_global_mouse_position())
+				var m = machineManager.get_machine(pos)
+				if m != null:
+					m.handle_key_press(event.keycode)
+	
+	elif event is InputEventMouseButton:
+		var pos = machineManager.snap_to_grid(get_global_mouse_position())
+		var m = machineManager.get_machine(pos)
+		if m != null:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+				m.handle_key_press(KEY_UP)
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+				m.handle_key_press(KEY_DOWN)
 
 
 # Debug draw mode, might be used in the actual game tbh
@@ -173,14 +201,18 @@ func _draw():
 			# Get mouse position in world space
 			var mouse_pos = get_global_mouse_position()
 			var bounds = machine_shapes[selected_machine_index]
-			var grid_pos = snap_to_grid(mouse_pos)
+			var grid_pos = machineManager.snap_to_grid(mouse_pos)
 			
 			for x in range(bounds.x):
 				for y in range(bounds.y):
-					var chosen_color = Color(1, 0, 0.4, 0.5)
+					var chosen_color = Color(1, 0, 0.4, 0.5) # red (assume blocked by default)
 					var m = machineManager.get_machine(grid_pos + Vector2i(x, y))
 					if m == null or (selected_machine_index == 0 and m is ConveyerBelt):
-						chosen_color = Color(0.2, 0.5, 1, 0.5)
+						chosen_color = Color(0.2, 0.5, 1, 0.5) # blue (open slot)
+					if m == null and selected_machine_index == 1:
+						var tile_data: TileData = oreVeinLayer.get_cell_tile_data(grid_pos + Vector2i(x, y))
+						if tile_data == null:
+							chosen_color = Color(1, 0, 0.4, 0.5) # back to red
 					# Snap mouse position to grid
 					var snapped_pos = (Vector2(grid_pos) + Vector2(x, y)) * GRID_SIZE + Vector2.ONE * GRID_SIZE/2
 					# Draw a red dot at the center of the snapped grid cell

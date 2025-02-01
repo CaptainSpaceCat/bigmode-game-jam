@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://djueq03afge34"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/Hub.gd" id="1_147rr"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_oxxeu"]
+[ext_resource type="Shader" path="res://Shaders/radial_cutoff.gdshader" id="3_nmrb8"]
+[ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_urkfv"]
+[ext_resource type="Texture2D" uid="uid://giijpx35c8gx" path="res://Textures/hub_progress_bar.png" id="4_amvs0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guxcr"]
+atlas = ExtResource("2_oxxeu")
+region = Rect2(80, 0, 48, 48)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ip6k"]
+shader = ExtResource("3_nmrb8")
+shader_parameter/progress = 0.0
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/start_angle = 4.71239
+shader_parameter/clockwise = false
+
+[node name="Hub" type="Node2D" node_paths=PackedStringArray("inputBuffers", "progressBar")]
+script = ExtResource("1_147rr")
+inputBuffers = [NodePath("Buffers/InputBuffer1"), NodePath("Buffers/InputBuffer2"), NodePath("Buffers/InputBuffer3"), NodePath("Buffers/InputBuffer4"), NodePath("Buffers/InputBuffer5"), NodePath("Buffers/InputBuffer6"), NodePath("Buffers/InputBuffer7"), NodePath("Buffers/InputBuffer8"), NodePath("Buffers/InputBuffer9"), NodePath("Buffers/InputBuffer10"), NodePath("Buffers/InputBuffer11"), NodePath("Buffers/InputBuffer12")]
+progressBar = NodePath("ProgressBar")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = SubResource("AtlasTexture_guxcr")
+
+[node name="ProgressBar" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8ip6k")
+position = Vector2(16, 16)
+texture = ExtResource("4_amvs0")
+
+[node name="Buffers" type="Node2D" parent="."]
+
+[node name="InputBuffer1" type="Node2D" parent="Buffers"]
+position = Vector2(0, -4)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer2" type="Node2D" parent="Buffers"]
+position = Vector2(16, -4)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer3" type="Node2D" parent="Buffers"]
+position = Vector2(32, -4)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer4" type="Node2D" parent="Buffers"]
+position = Vector2(36, 0)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer5" type="Node2D" parent="Buffers"]
+position = Vector2(36, 16)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer6" type="Node2D" parent="Buffers"]
+position = Vector2(36, 32)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer7" type="Node2D" parent="Buffers"]
+position = Vector2(32, 36)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer8" type="Node2D" parent="Buffers"]
+position = Vector2(16, 36)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer9" type="Node2D" parent="Buffers"]
+position = Vector2(0, 36)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer10" type="Node2D" parent="Buffers"]
+position = Vector2(-4, 32)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer11" type="Node2D" parent="Buffers"]
+position = Vector2(-4, 16)
+script = ExtResource("3_urkfv")
+
+[node name="InputBuffer12" type="Node2D" parent="Buffers"]
+position = Vector2(-4, 0)
+script = ExtResource("3_urkfv")
