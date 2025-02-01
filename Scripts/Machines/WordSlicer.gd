@@ -6,6 +6,8 @@ extends Machine
 @export var bufferOutB: LetterBuffer
 
 @export var numberLabel: RichTextLabel
+@export var modeA: Node2D
+@export var modeB: Node2D
 
 var slice_index = 1
 

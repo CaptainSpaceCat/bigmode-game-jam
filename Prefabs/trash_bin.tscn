@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbm1fatw7owh4"]
+[gd_scene load_steps=6 format=3 uid="uid://cbm1fatw7owh4"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/TrashBin.gd" id="1_inoxr"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_vskuv"]
@@ -8,12 +8,20 @@
 atlas = ExtResource("2_vskuv")
 region = Rect2(0, 96, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ps6l"]
+atlas = ExtResource("2_vskuv")
+region = Rect2(2, 98, 12, 12)
+
 [node name="TrashBin" type="Node2D" node_paths=PackedStringArray("inputBuffers")]
 script = ExtResource("1_inoxr")
 inputBuffers = [NodePath("InputBuffer1"), NodePath("InputBuffer2"), NodePath("InputBuffer3"), NodePath("InputBuffer4")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_b3y01")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+texture = SubResource("AtlasTexture_3ps6l")
 
 [node name="InputBuffer1" type="Node2D" parent="."]
 position = Vector2(0, -5)

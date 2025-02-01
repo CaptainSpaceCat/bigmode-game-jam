@@ -3,7 +3,11 @@ extends Machine
 
 @export var inputBuffers: Array[LetterBuffer]
 @onready var machineManager: MachineManager = get_node("/root/Main Scene/MachineManager")
+@export var textLabel: RichTextLabel
 @export var progressBar: Sprite2D
+@export var ringAnchor: Node2D
+@export var expandingRingPrefab: PackedScene = preload("res://Prefabs/expanding_ring.tscn")
+
 var shader : ShaderMaterial
 var current_progress: float = 0
 
@@ -11,10 +15,10 @@ var current_progress: float = 0
 
 var goal_word_data: Array = [
 	#word, goal count, cycles per loss
-	["COPPER", 10, 30],
-	["IRON", 20, 25],
-	["CRONY", 10, 20],
-	["PEON", 10, 15],
+	["COPPER", 15, 1000000],
+	["IRON", 20, 21],
+	["CRONY", 10, 17],
+	["NOPE", 10, 15],
 	["POWER", 30, 10],
 ]
 var current_goal_index: int = 0
@@ -23,9 +27,10 @@ var current_goal_index: int = 0
 func _ready():
 	shader = progressBar.material
 	discrete_position = machineManager.snap_to_grid(global_position)
-	discrete_shape = Vector2i.ONE * 3
+	discrete_shape = Vector2i(3, 4)
 	is_destructible = false # don't let the player destroy the hub lol
 	machineManager.register_machine(discrete_position, self)
+	display_word(goal_word_data[0][0])
 
 	# top side
 	self.add_input(Vector2i(0,-1), Vector2i(0,0))
@@ -35,11 +40,13 @@ func _ready():
 	self.add_input(Vector2i(3,0), Vector2i(2,0))
 	self.add_input(Vector2i(3,1), Vector2i(2,1))
 	self.add_input(Vector2i(3,2), Vector2i(2,2))
+	self.add_input(Vector2i(3,3), Vector2i(2,3))
 	# bottom
-	self.add_input(Vector2i(2,3), Vector2i(2,2))
-	self.add_input(Vector2i(1,3), Vector2i(1,2))
-	self.add_input(Vector2i(0,3), Vector2i(0,2))
+	self.add_input(Vector2i(2,4), Vector2i(2,3))
+	self.add_input(Vector2i(1,4), Vector2i(1,3))
+	self.add_input(Vector2i(0,4), Vector2i(0,3))
 	# left
+	self.add_input(Vector2i(-1,3), Vector2i(0,3))
 	self.add_input(Vector2i(-1,2), Vector2i(0,2))
 	self.add_input(Vector2i(-1,1), Vector2i(0,1))
 	self.add_input(Vector2i(-1,0), Vector2i(0,0))
@@ -65,8 +72,15 @@ func perform_cycle(machine_map: Dictionary) -> void:
 				current_progress += 1.0/word_data[1]
 
 	if current_progress >= 1:
+		# emit an expanding ring on level completion
+		var emit_ring = expandingRingPrefab.instantiate()
+		add_child(emit_ring)
+		emit_ring.global_position = ringAnchor.global_position
+		
+		# reset progress
 		current_progress = 0
 		current_goal_index += 1
+		display_word(goal_word_data[current_goal_index][0])
 		if current_goal_index == 1:
 			# set the camera bounds to stage 2
 			var active_camera = get_viewport().get_camera_2d()
@@ -87,3 +101,10 @@ func get_held_items() -> Array:
 		for item in buf.get_held_items():
 			items.append(item)
 	return items
+
+func display_word(word: String):
+	var text = "[center]" + word + "[/center]"
+	#textLabel.clear()
+	textLabel.bbcode_enabled = true
+	#textLabel.add_text(text)
+	textLabel.text = text

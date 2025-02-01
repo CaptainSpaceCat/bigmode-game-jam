@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://6chepi31qiqa"]
+
+[ext_resource type="Script" path="res://Scripts/ExpandingRing.gd" id="1_0y6c8"]
+[ext_resource type="Texture2D" uid="uid://giijpx35c8gx" path="res://Textures/hub_progress_bar.png" id="1_8jg1u"]
+
+[node name="ExpandingRing" type="Sprite2D"]
+z_index = 2
+texture = ExtResource("1_8jg1u")
+script = ExtResource("1_0y6c8")

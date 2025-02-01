@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://8jgrnldd5nlg"]
+[gd_scene load_steps=9 format=3 uid="uid://8jgrnldd5nlg"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/WordSlicer.gd" id="1_2bk1r"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_lbsri"]
@@ -7,6 +7,18 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_f5hre"]
 atlas = ExtResource("2_lbsri")
 region = Rect2(0, 32, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p53ln"]
+atlas = ExtResource("2_lbsri")
+region = Rect2(3, 35, 26.161, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qen7d"]
+atlas = ExtResource("2_lbsri")
+region = Rect2(32, 32, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fidpv"]
+atlas = ExtResource("2_lbsri")
+region = Rect2(35, 35, 26, 10)
 
 [sub_resource type="Theme" id="Theme_cgwgo"]
 default_font_size = 55
@@ -18,11 +30,31 @@ bufferOutA = NodePath("OutputSlotA")
 bufferOutB = NodePath("OutputSlotB")
 numberLabel = NodePath("RichTextLabel")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="ModeB" type="Node2D" parent="."]
+
+[node name="Base" type="Sprite2D" parent="ModeB"]
 position = Vector2(8, 0)
 texture = SubResource("AtlasTexture_f5hre")
 
+[node name="Cover" type="Sprite2D" parent="ModeB"]
+z_index = 1
+position = Vector2(8, 0)
+texture = SubResource("AtlasTexture_p53ln")
+
+[node name="ModeA" type="Node2D" parent="."]
+visible = false
+
+[node name="Base" type="Sprite2D" parent="ModeA"]
+position = Vector2(8, 0)
+texture = SubResource("AtlasTexture_qen7d")
+
+[node name="Cover" type="Sprite2D" parent="ModeA"]
+z_index = 1
+position = Vector2(8, 0)
+texture = SubResource("AtlasTexture_fidpv")
+
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

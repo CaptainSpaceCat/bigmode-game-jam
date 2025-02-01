@@ -1,12 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2renfhq6jpy8"]
+[gd_scene load_steps=6 format=3 uid="uid://b2renfhq6jpy8"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/MiningDrill.gd" id="1_y23cw"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_tlr4t"]
 [ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_m11u8"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nc0p"]
+atlas = ExtResource("2_tlr4t")
+region = Rect2(32, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dijo"]
 atlas = ExtResource("2_tlr4t")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(3, 3, 26, 26)
 
 [node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA")]
 script = ExtResource("1_y23cw")
@@ -14,6 +18,11 @@ generate_pos = NodePath("OutputSlot")
 bufferOutA = NodePath("OutputSlot")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_5nc0p")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_4dijo")
 
