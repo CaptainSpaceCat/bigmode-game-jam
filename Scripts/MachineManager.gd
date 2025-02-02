@@ -9,6 +9,16 @@ var cumulative_time: float = 0
 @export var tick_interval: float = 1
 const GRID_SIZE = 16
 
+func _ready():
+	# go through all existing machines and register them
+	for child in get_children():
+		if child is Machine:
+			child = child as Machine
+			var grid_pos = snap_to_grid(child.global_position)
+			child.discrete_position = grid_pos
+			register_machine(grid_pos, child)
+
+
 func _process(delta):
 	cumulative_time += delta
 	if cumulative_time >= tick_interval:

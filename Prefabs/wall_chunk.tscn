@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dk0ifga4wc8fo"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/WallSegment.gd" id="1_gym4n"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_swiw4"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="3_sq8df"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocdw2"]
+atlas = ExtResource("2_swiw4")
+region = Rect2(96, 64, 32, 16)
+
+[node name="WallChunk" type="Node2D"]
+script = ExtResource("1_gym4n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, 0)
+texture = SubResource("AtlasTexture_ocdw2")
+
+[node name="SoundPool" type="Node2D" parent="."]
+script = ExtResource("3_sq8df")
+gain_db = -15
+SOUND_PATH = "res://Audio/SFX/door_open.wav"

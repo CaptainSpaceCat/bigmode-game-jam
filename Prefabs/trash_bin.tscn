@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbm1fatw7owh4"]
+[gd_scene load_steps=7 format=3 uid="uid://cbm1fatw7owh4"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/TrashBin.gd" id="1_inoxr"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_vskuv"]
 [ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_lsoep"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="4_w0rrj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3y01"]
 atlas = ExtResource("2_vskuv")
@@ -27,14 +28,37 @@ texture = SubResource("AtlasTexture_3ps6l")
 position = Vector2(0, -5)
 script = ExtResource("3_lsoep")
 
+[node name="SoundPool" type="Node2D" parent="InputBuffer1"]
+script = ExtResource("4_w0rrj")
+gain_db = -30
+SOUND_PATH = "res://Audio/SFX/flame_burst.wav"
+
 [node name="InputBuffer2" type="Node2D" parent="."]
 position = Vector2(5, 0)
 script = ExtResource("3_lsoep")
+
+[node name="SoundPool" type="Node2D" parent="InputBuffer2"]
+position = Vector2(-5, -5)
+script = ExtResource("4_w0rrj")
+gain_db = -30
+SOUND_PATH = "res://Audio/SFX/flame_burst.wav"
 
 [node name="InputBuffer3" type="Node2D" parent="."]
 position = Vector2(0, 5)
 script = ExtResource("3_lsoep")
 
+[node name="SoundPool" type="Node2D" parent="InputBuffer3"]
+position = Vector2(0, -10)
+script = ExtResource("4_w0rrj")
+gain_db = -30
+SOUND_PATH = "res://Audio/SFX/flame_burst.wav"
+
 [node name="InputBuffer4" type="Node2D" parent="."]
 position = Vector2(-5, 0)
 script = ExtResource("3_lsoep")
+
+[node name="SoundPool" type="Node2D" parent="InputBuffer4"]
+position = Vector2(5, -5)
+script = ExtResource("4_w0rrj")
+gain_db = -30
+SOUND_PATH = "res://Audio/SFX/flame_burst.wav"

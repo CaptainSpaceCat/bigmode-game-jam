@@ -8,6 +8,7 @@ func _init():
 	self.add_input(Vector2i.RIGHT, Vector2i.ZERO)
 	self.add_input(Vector2i.DOWN, Vector2i.ZERO)
 	self.add_input(Vector2i.LEFT, Vector2i.ZERO)
+	self.unlocked_by_default = false
 
 func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 	if channel >= 0 and channel < len(inputBuffers):

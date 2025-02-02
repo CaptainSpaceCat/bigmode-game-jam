@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://djueq03afge34"]
+[gd_scene load_steps=11 format=3 uid="uid://djueq03afge34"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/Hub.gd" id="1_147rr"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_oxxeu"]
 [ext_resource type="Shader" path="res://Shaders/radial_cutoff.gdshader" id="3_nmrb8"]
 [ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_urkfv"]
 [ext_resource type="Texture2D" uid="uid://giijpx35c8gx" path="res://Textures/hub_progress_bar.png" id="4_amvs0"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="6_pqqxs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_guxcr"]
 atlas = ExtResource("2_oxxeu")
@@ -15,7 +16,7 @@ atlas = ExtResource("2_oxxeu")
 region = Rect2(83, 3, 42, 58)
 
 [sub_resource type="Theme" id="Theme_o42ud"]
-default_font_size = 58
+default_font_size = 80
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ip6k"]
 shader = ExtResource("3_nmrb8")
@@ -42,10 +43,13 @@ texture = SubResource("AtlasTexture_g0ify")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 z_index = 1
-offset_right = 320.0
-offset_bottom = 80.0
+offset_left = -1.0
+offset_top = -2.0
+offset_right = 339.0
+offset_bottom = 118.0
 scale = Vector2(0.1, 0.1)
 theme = SubResource("Theme_o42ud")
+theme_override_colors/default_color = Color(0.324862, 1, 0.425051, 1)
 bbcode_enabled = true
 
 [node name="ProgressBar" type="Sprite2D" parent="."]
@@ -60,57 +64,124 @@ texture = ExtResource("4_amvs0")
 position = Vector2(0, -4)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer1"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer2" type="Node2D" parent="Buffers"]
 position = Vector2(16, -4)
 script = ExtResource("3_urkfv")
+
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer2"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="InputBuffer3" type="Node2D" parent="Buffers"]
 position = Vector2(32, -4)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer3"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer4" type="Node2D" parent="Buffers"]
 position = Vector2(36, 0)
 script = ExtResource("3_urkfv")
+
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer4"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="InputBuffer5" type="Node2D" parent="Buffers"]
 position = Vector2(36, 16)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer5"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer6" type="Node2D" parent="Buffers"]
 position = Vector2(36, 32)
 script = ExtResource("3_urkfv")
+
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer6"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="InputBuffer7" type="Node2D" parent="Buffers"]
 position = Vector2(36, 48)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer7"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer8" type="Node2D" parent="Buffers"]
 position = Vector2(32, 52)
 script = ExtResource("3_urkfv")
+
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer8"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="InputBuffer9" type="Node2D" parent="Buffers"]
 position = Vector2(16, 52)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer9"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer10" type="Node2D" parent="Buffers"]
 position = Vector2(0, 52)
 script = ExtResource("3_urkfv")
+
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer10"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="InputBuffer11" type="Node2D" parent="Buffers"]
 position = Vector2(-4, 48)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer11"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer12" type="Node2D" parent="Buffers"]
 position = Vector2(-4, 32)
 script = ExtResource("3_urkfv")
+
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer12"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="InputBuffer13" type="Node2D" parent="Buffers"]
 position = Vector2(-4, 16)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer13"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="InputBuffer14" type="Node2D" parent="Buffers"]
 position = Vector2(-4, 0)
 script = ExtResource("3_urkfv")
 
+[node name="SoundPool" type="Node2D" parent="Buffers/InputBuffer14"]
+script = ExtResource("6_pqqxs")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
 [node name="Center" type="Node2D" parent="."]
 position = Vector2(16, 32)
+
+[node name="ProgressSound" type="Node2D" parent="."]
+script = ExtResource("6_pqqxs")
+gain_db = -10
+pool_size = 1
+SOUND_PATH = "res://Audio/SFX/harmonica_up.wav"
+
+[node name="DingSound" type="Node2D" parent="."]
+script = ExtResource("6_pqqxs")
+gain_db = -15
+SOUND_PATH = "res://Audio/SFX/ding.wav"

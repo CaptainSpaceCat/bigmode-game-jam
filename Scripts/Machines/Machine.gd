@@ -4,7 +4,7 @@ extends Node2D
 var update_flag: bool = false
 var discrete_position: Vector2i  # World grid position of the machine
 var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
-var locked_by_default: bool = false
+var unlocked_by_default: bool = true
 var is_destructible: bool = true
 
 @export var debug_enabled: bool = false
@@ -137,3 +137,13 @@ func get_relative_direction(from: Vector2i, to: Vector2i) -> int:
 	elif diff == Vector2i.LEFT:
 		return 3
 	return -1
+
+
+func unregister_self() -> void:
+	# Assume that all machines are instantiated as children of MachineManager
+	var parent = get_parent()
+	if parent is MachineManager:
+		parent = parent as MachineManager
+		parent.unregister_machine(self)
+	else:
+		printerr("Cannot unregister unparented machine: ", get_class())

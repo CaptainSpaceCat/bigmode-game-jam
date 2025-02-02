@@ -3,6 +3,7 @@ extends Camera2D
 # Speed of the camera in pixels per second.
 @export var speed: float = 300.0
 @export var default_bounds: CollisionShape2D
+@export var noclip: bool = false
 var bounds_rect: Rect2 = Rect2(Vector2.ZERO, Vector2.ZERO)
 
 func _ready():
@@ -28,8 +29,10 @@ func _process(delta: float) -> void:
 	limit_rect.position += camera_size/2
 	limit_rect.size -= camera_size
 	#print("Limit ", limit_rect)
-	position.x = clamp(position.x, limit_rect.position.x, limit_rect.position.x + limit_rect.size.x)
-	position.y = clamp(position.y, limit_rect.position.y, limit_rect.position.y + limit_rect.size.y)
+	
+	if !noclip:
+		position.x = clamp(position.x, limit_rect.position.x, limit_rect.position.x + limit_rect.size.x)
+		position.y = clamp(position.y, limit_rect.position.y, limit_rect.position.y + limit_rect.size.y)
 
 
 func change_bounds(bounds: CollisionShape2D) -> void:

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2renfhq6jpy8"]
+[gd_scene load_steps=7 format=3 uid="uid://b2renfhq6jpy8"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/MiningDrill.gd" id="1_y23cw"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_tlr4t"]
 [ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_m11u8"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="4_kxhdo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5nc0p"]
 atlas = ExtResource("2_tlr4t")
@@ -10,7 +11,7 @@ region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dijo"]
 atlas = ExtResource("2_tlr4t")
-region = Rect2(3, 3, 26, 26)
+region = Rect2(4, 3, 24, 26)
 
 [node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA")]
 script = ExtResource("1_y23cw")
@@ -29,3 +30,8 @@ texture = SubResource("AtlasTexture_4dijo")
 [node name="OutputSlot" type="Node2D" parent="."]
 position = Vector2(16, 0)
 script = ExtResource("3_m11u8")
+
+[node name="SoundPool" type="Node2D" parent="OutputSlot"]
+script = ExtResource("4_kxhdo")
+gain_db = -32
+SOUND_PATH = "res://Audio/SFX/crush.wav"

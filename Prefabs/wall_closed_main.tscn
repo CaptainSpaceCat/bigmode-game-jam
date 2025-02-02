@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvs3magqwgmdl"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/ClosedWall.gd" id="1_cxi7q"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_0lfhi"]
+[ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_exf61"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="4_2ecqc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5o0nq"]
+atlas = ExtResource("2_0lfhi")
+region = Rect2(96, 80, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75ljg"]
+atlas = ExtResource("2_0lfhi")
+region = Rect2(100, 82, 24, 44)
+
+[node name="WallClosedMain" type="Node2D" node_paths=PackedStringArray("inputBufferA")]
+script = ExtResource("1_cxi7q")
+inputBufferA = NodePath("InputA")
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(8, 16)
+texture = SubResource("AtlasTexture_5o0nq")
+
+[node name="Cover" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(8, 16)
+texture = SubResource("AtlasTexture_75ljg")
+
+[node name="InputA" type="Node2D" parent="."]
+position = Vector2(17, 16)
+script = ExtResource("3_exf61")
+
+[node name="SoundPool" type="Node2D" parent="InputA"]
+script = ExtResource("4_2ecqc")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
+
+[node name="FailSound" type="Node2D" parent="."]
+script = ExtResource("4_2ecqc")
+SOUND_PATH = "res://Audio/SFX/fail_sound.wav"
+
+[node name="SucceedSound" type="Node2D" parent="."]
+script = ExtResource("4_2ecqc")
+SOUND_PATH = "res://Audio/SFX/ding.wav"

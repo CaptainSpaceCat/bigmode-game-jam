@@ -21,6 +21,8 @@ func try_append(letter: Letter) -> bool:
 			content += l
 			letter.send_to(global_position)
 			queue_delete = letter
+			# Play a sound for this input, if we have one
+			try_play_sound()
 		if len(l) == 0: # Check for EOF
 			is_full = true
 			# Free the EOF letter now to avoid having to wait a cycle or more
@@ -43,6 +45,14 @@ func count() -> int:
 	return len(content)
 var held_letter: Letter
 
+func clear_self() -> void:
+	if held_letter != null:
+		held_letter.queue_free()
+	if queue_delete != null:
+		queue_delete.queue_free()
+	content = ""
+	is_full = false
+
 # Pops the first character out of the buffer and stores it in held_letter
 func dequeue_to_hand():
 	if held_letter == null:
@@ -50,12 +60,14 @@ func dequeue_to_hand():
 			var l = content[0]
 			content = content.substr(1)
 			if l != " ": # Adding space characters to the buffer will force it to skip machine ticks
+				# Play a sound for this output
+				try_play_sound()
+				# Create the letter
 				var letter: Letter = letterPrefab.instantiate()
 				letter.set_letter(l)
 				letter.global_position = global_position
 				itemParent.add_child(letter)
 				held_letter = letter
-				#return letter
 		else:
 			var letter: Letter = letterPrefab.instantiate() # EOF
 			letter.global_position = global_position
@@ -80,3 +92,10 @@ func get_held_items() -> Array:
 	if queue_delete != null:
 		items.append(queue_delete)
 	return items
+
+func try_play_sound() -> bool:
+	if has_node("SoundPool"):
+		var sound_pool = $SoundPool as SoundPool
+		sound_pool.play_sound()
+		return true
+	return false

@@ -85,10 +85,6 @@ func get_held_items() -> Array:
 		items.append(slotB)
 	return items
 
-
-func refresh_texture() -> void:
-	pass
-
 @export var spriteStraight: Sprite2D
 @export var spriteBent: Sprite2D
 

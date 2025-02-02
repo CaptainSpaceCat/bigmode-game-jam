@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://8jgrnldd5nlg"]
+[gd_scene load_steps=10 format=3 uid="uid://8jgrnldd5nlg"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/WordSlicer.gd" id="1_2bk1r"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_lbsri"]
 [ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_o32vy"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="4_r5g0e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f5hre"]
 atlas = ExtResource("2_lbsri")
@@ -10,7 +11,7 @@ region = Rect2(0, 32, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p53ln"]
 atlas = ExtResource("2_lbsri")
-region = Rect2(3, 35, 26.161, 10)
+region = Rect2(3, 35, 27, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qen7d"]
 atlas = ExtResource("2_lbsri")
@@ -18,39 +19,42 @@ region = Rect2(32, 32, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fidpv"]
 atlas = ExtResource("2_lbsri")
-region = Rect2(35, 35, 26, 10)
+region = Rect2(35, 34, 27, 11)
 
 [sub_resource type="Theme" id="Theme_cgwgo"]
-default_font_size = 55
+default_font_size = 70
 
-[node name="WordSlicer" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferOutA", "bufferOutB", "numberLabel")]
+[node name="WordSlicer" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferOutA", "bufferOutB", "bufferOutC", "numberLabel", "modeA", "modeB")]
 script = ExtResource("1_2bk1r")
 bufferInA = NodePath("InputSlot")
 bufferOutA = NodePath("OutputSlotA")
 bufferOutB = NodePath("OutputSlotB")
+bufferOutC = NodePath("OutputSlotC")
 numberLabel = NodePath("RichTextLabel")
-
-[node name="ModeB" type="Node2D" parent="."]
-
-[node name="Base" type="Sprite2D" parent="ModeB"]
-position = Vector2(8, 0)
-texture = SubResource("AtlasTexture_f5hre")
-
-[node name="Cover" type="Sprite2D" parent="ModeB"]
-z_index = 1
-position = Vector2(8, 0)
-texture = SubResource("AtlasTexture_p53ln")
+modeA = NodePath("ModeA")
+modeB = NodePath("ModeB")
 
 [node name="ModeA" type="Node2D" parent="."]
-visible = false
+position = Vector2(8, 0)
 
 [node name="Base" type="Sprite2D" parent="ModeA"]
-position = Vector2(8, 0)
-texture = SubResource("AtlasTexture_qen7d")
+texture = SubResource("AtlasTexture_f5hre")
 
 [node name="Cover" type="Sprite2D" parent="ModeA"]
 z_index = 1
+position = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_p53ln")
+
+[node name="ModeB" type="Node2D" parent="."]
+visible = false
 position = Vector2(8, 0)
+
+[node name="Base" type="Sprite2D" parent="ModeB"]
+texture = SubResource("AtlasTexture_qen7d")
+
+[node name="Cover" type="Sprite2D" parent="ModeB"]
+z_index = 1
+position = Vector2(0.5, -0.5)
 texture = SubResource("AtlasTexture_fidpv")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
@@ -60,14 +64,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1.0
-offset_top = -4.0
-offset_right = 49.0
-offset_bottom = 76.0
+offset_left = 2.0
+offset_top = -5.0
+offset_right = 52.0
+offset_bottom = 95.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.1, 0.1)
 theme = SubResource("Theme_cgwgo")
+theme_override_colors/default_color = Color(0.968627, 0.564706, 0, 1)
 text = "1"
 scroll_active = false
 
@@ -75,10 +80,38 @@ scroll_active = false
 position = Vector2(-4, 0)
 script = ExtResource("3_o32vy")
 
+[node name="SoundPool" type="Node2D" parent="InputSlot"]
+position = Vector2(24, 0)
+script = ExtResource("4_r5g0e")
+gain_db = -10
+SOUND_PATH = "res://Audio/SFX/ker.wav"
+
 [node name="OutputSlotA" type="Node2D" parent="."]
 position = Vector2(20, 0)
 script = ExtResource("3_o32vy")
 
+[node name="SoundPool" type="Node2D" parent="OutputSlotA"]
+script = ExtResource("4_r5g0e")
+gain_db = -10
+pitch_rescale = 1.5
+SOUND_PATH = "res://Audio/SFX/thunk.wav"
+
 [node name="OutputSlotB" type="Node2D" parent="."]
 position = Vector2(16, 4)
 script = ExtResource("3_o32vy")
+
+[node name="SoundPool" type="Node2D" parent="OutputSlotB"]
+script = ExtResource("4_r5g0e")
+gain_db = -10
+pitch_rescale = 0.8
+SOUND_PATH = "res://Audio/SFX/thunk.wav"
+
+[node name="OutputSlotC" type="Node2D" parent="."]
+position = Vector2(16, -4)
+script = ExtResource("3_o32vy")
+
+[node name="SoundPool" type="Node2D" parent="OutputSlotC"]
+script = ExtResource("4_r5g0e")
+gain_db = -10
+pitch_rescale = 0.8
+SOUND_PATH = "res://Audio/SFX/thunk.wav"
