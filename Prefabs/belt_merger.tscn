@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmihnbi57otw5"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/BeltMerger.gd" id="1_voehs"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_tnx7c"]
+[ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_k3c43"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm0pp"]
+atlas = ExtResource("2_tnx7c")
+region = Rect2(32, 48, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo2xd"]
+atlas = ExtResource("2_tnx7c")
+region = Rect2(34, 50, 12, 28)
+
+[node name="BeltMerger" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferInB", "bufferOutA")]
+script = ExtResource("1_voehs")
+bufferInA = NodePath("InputBufferA")
+bufferInB = NodePath("InputBufferB")
+bufferOutA = NodePath("OutputBufferA")
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = SubResource("AtlasTexture_tm0pp")
+
+[node name="Cover" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(0, 8)
+texture = SubResource("AtlasTexture_vo2xd")
+
+[node name="InputBufferA" type="Node2D" parent="."]
+position = Vector2(-4, 0)
+script = ExtResource("3_k3c43")
+
+[node name="InputBufferB" type="Node2D" parent="."]
+position = Vector2(-4, 16)
+script = ExtResource("3_k3c43")
+
+[node name="OutputBufferA" type="Node2D" parent="."]
+position = Vector2(4, 16)
+script = ExtResource("3_k3c43")

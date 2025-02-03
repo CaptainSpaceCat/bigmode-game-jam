@@ -4,6 +4,7 @@ extends Machine
 @export var inputBuffers: Array[LetterBuffer]
 @onready var machineManager: MachineManager = get_node("/root/Main Scene/MachineManager")
 @onready var machineCursor: MachineCursor = get_node("/root/Main Scene/MachineCursor")
+@export var inventoryUI: InventoryUI
 @export var textLabel: RichTextLabel
 @export var progressBar: Sprite2D
 @export var ringAnchor: Node2D
@@ -100,12 +101,13 @@ func perform_cycle(machine_map: Dictionary) -> void:
 			active_camera.change_bounds(cameraBoundsStage2)
 			
 			# unlock slicer and trash bin
-			machineCursor.unlock_machine(2)
-			machineCursor.unlock_machine(4)
+			machineCursor.unlock_machine(3)
+			machineCursor.unlock_machine(5)
 		elif current_goal_index == 2:
 			pass
-			# unlock merger
-			machineCursor.unlock_machine(3)
+			# unlock merger and combiner
+			machineCursor.unlock_machine(1)
+			machineCursor.unlock_machine(4)
 	
 	# Check for endgame again to keep the progress bar full for the next tick
 	# a bit jank tbh

@@ -13,25 +13,35 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("2_tlr4t")
 region = Rect2(4, 3, 24, 26)
 
-[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA")]
+[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA", "bufferOutB", "baseSprite")]
 script = ExtResource("1_y23cw")
-generate_pos = NodePath("OutputSlot")
-bufferOutA = NodePath("OutputSlot")
+generate_pos = NodePath("OutputSlotA")
+bufferOutA = NodePath("OutputSlotA")
+bufferOutB = NodePath("OutputSlotB")
+baseSprite = NodePath("Base")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Base" type="Sprite2D" parent="."]
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_5nc0p")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Cover" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_4dijo")
 
-[node name="OutputSlot" type="Node2D" parent="."]
+[node name="OutputSlotA" type="Node2D" parent="."]
 position = Vector2(16, 0)
 script = ExtResource("3_m11u8")
 
-[node name="SoundPool" type="Node2D" parent="OutputSlot"]
+[node name="SoundPool" type="Node2D" parent="OutputSlotA"]
+script = ExtResource("4_kxhdo")
+gain_db = -32
+SOUND_PATH = "res://Audio/SFX/crush.wav"
+
+[node name="OutputSlotB" type="Node2D" parent="."]
+script = ExtResource("3_m11u8")
+
+[node name="SoundPool" type="Node2D" parent="OutputSlotB"]
 script = ExtResource("4_kxhdo")
 gain_db = -32
 SOUND_PATH = "res://Audio/SFX/crush.wav"

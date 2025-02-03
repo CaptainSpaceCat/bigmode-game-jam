@@ -15,6 +15,7 @@ func _ready():
 	# dummy outputs for correct door deletion ordering
 	self.add_output(Vector2i.ZERO, Vector2i.UP)
 	self.add_output(Vector2i(0,2), Vector2i(0,3))
+	self.is_destructible = false
 
 func perform_cycle(machine_map: Dictionary) -> void:
 	if inputBufferA.is_full:

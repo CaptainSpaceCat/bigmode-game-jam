@@ -62,6 +62,8 @@ func get_held_items() -> Array:
 		items.append(item)
 	for item in bufferOutB.get_held_items():
 		items.append(item)
+	for item in bufferOutC.get_held_items():
+		items.append(item)
 	return items
 
 var flipped: bool = false

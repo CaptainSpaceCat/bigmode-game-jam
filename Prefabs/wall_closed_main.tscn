@@ -36,6 +36,7 @@ SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
 
 [node name="FailSound" type="Node2D" parent="."]
 script = ExtResource("4_2ecqc")
+gain_db = -10
 SOUND_PATH = "res://Audio/SFX/fail_sound.wav"
 
 [node name="SucceedSound" type="Node2D" parent="."]

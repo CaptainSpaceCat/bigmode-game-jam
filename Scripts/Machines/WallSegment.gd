@@ -17,6 +17,7 @@ func _ready():
 
 func _init() -> void:
 	self.discrete_shape = Vector2i(2,1)
+	self.is_destructible = false
 	
 
 func perform_cycle(machine_map: Dictionary) -> void:

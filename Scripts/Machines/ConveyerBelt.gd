@@ -112,6 +112,3 @@ func _draw():
 	else:
 		printerr("Conveyer fold error")
 	
-	
-	
-	

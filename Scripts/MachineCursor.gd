@@ -22,7 +22,7 @@ var selected_machine_index: int = -1
 
 # start previous belt pos as 1000 blocks away so its basically unreachable until player places belts
 var previous_belt_pos: Vector2i = Vector2i.ONE * 1000
-
+var previous_mouse_drag_pos: Vector2i = Vector2i.ONE * 10000
 
 func _ready():
 	# read machine data from temporary prefab instances
@@ -40,7 +40,6 @@ func _ready():
 		i += 1
 	print(machine_shapes)
 
-var previous_mouse_drag_pos: Vector2i = Vector2i.ONE * 10000
 
 func _process(delta):
 	# Request a redraw to update cursor visuals
@@ -49,6 +48,7 @@ func _process(delta):
 	# Reset drag tracking if we release the LMB
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		previous_mouse_drag_pos = Vector2i.ONE * 10000
+		previous_belt_pos = Vector2i.ONE * 1000
 		
 	# Handle left clicking to place machines
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -79,7 +79,7 @@ func _process(delta):
 			# Check to see if the new machine will fit, and if so, place it
 			if machineManager.is_area_clear(pos, bounds):
 				# Check for ores
-				if selected_machine_index == 1: # miner
+				if selected_machine_index == 2: # miner
 					var ore_flag = false
 					# Check all spots under the miner for ores
 					for x in range(bounds.x):
@@ -123,7 +123,7 @@ func place_machine(index: int, pos_index: Vector2i) -> Machine:
 	create_tween().tween_property(prefab, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_QUAD)
 	machineManager.add_child(prefab)
 	
-	if index == 1: # miner
+	if index == 2: # miner
 		for x in range(prefab.discrete_shape.x):
 			for y in range(prefab.discrete_shape.y):
 				var tile_data: TileData = oreVeinLayer.get_cell_tile_data(pos_index + Vector2i(x,y))
@@ -224,7 +224,7 @@ func _draw():
 				var m = machineManager.get_machine(grid_pos + Vector2i(x, y))
 				if m == null or (selected_machine_index == 0 and m is ConveyerBelt):
 					chosen_color = Color(0.2, 0.5, 1, 0.5) # blue (open slot)
-				if m == null and selected_machine_index == 1:
+				if m == null and selected_machine_index == 2: # miner
 					var tile_data: TileData = oreVeinLayer.get_cell_tile_data(grid_pos + Vector2i(x, y))
 					if tile_data == null:
 						chosen_color = Color(1, 0, 0.4, 0.5) # back to red
