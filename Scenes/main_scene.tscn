@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://cb7b13t8s4p26"]
+[gd_scene load_steps=36 format=4 uid="uid://cb7b13t8s4p26"]
 
 [ext_resource type="Script" path="res://Scripts/CameraMover.gd" id="1_8n3nr"]
 [ext_resource type="Texture2D" uid="uid://br8ruipm44ww" path="res://Textures/background_quick.png" id="1_rrgag"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://8jgrnldd5nlg" path="res://Prefabs/word_slicer.tscn" id="6_kyntq"]
 [ext_resource type="Script" path="res://Scripts/MachineManager.gd" id="6_n1tf0"]
 [ext_resource type="PackedScene" uid="uid://cfmflnlr0fny3" path="res://Prefabs/word_merger.tscn" id="8_m13vn"]
+[ext_resource type="PackedScene" uid="uid://dvgnxps1yl605" path="res://Prefabs/lightbulb.tscn" id="8_vr1jn"]
 [ext_resource type="PackedScene" uid="uid://djueq03afge34" path="res://Prefabs/hub.tscn" id="9_h6lbg"]
 [ext_resource type="PackedScene" uid="uid://bmihnbi57otw5" path="res://Prefabs/belt_merger.tscn" id="10_vxeqh"]
 [ext_resource type="PackedScene" uid="uid://cbm1fatw7owh4" path="res://Prefabs/trash_bin.tscn" id="11_5gov7"]
@@ -247,6 +248,9 @@ flipped = true
 [node name="WallChunk33" parent="MachineManager" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 360)
 flipped = true
+
+[node name="Lightbulb" parent="MachineManager" instance=ExtResource("8_vr1jn")]
+position = Vector2(456, 152)
 
 [node name="MachineCursor" type="Node2D" parent="." node_paths=PackedStringArray("inventoryUI", "oreVeinLayer")]
 z_index = 3

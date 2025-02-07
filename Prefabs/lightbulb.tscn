@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvgnxps1yl605"]
+
+[ext_resource type="Script" path="res://Scripts/Machines/LightbulbMachine.gd" id="1_ajo2b"]
+[ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_fi6ia"]
+[ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="3_h6td7"]
+[ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="4_0p21m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wa2vq"]
+atlas = ExtResource("2_fi6ia")
+region = Rect2(64, 80, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kyn5"]
+atlas = ExtResource("2_fi6ia")
+region = Rect2(66, 98, 12, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq6kc"]
+atlas = ExtResource("2_fi6ia")
+region = Rect2(80, 80, 16, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xp25l"]
+atlas = ExtResource("2_fi6ia")
+region = Rect2(82, 98, 12, 26)
+
+[node name="Lightbulb" type="Node2D" node_paths=PackedStringArray("modeOff", "modeOn", "inputBufferA")]
+script = ExtResource("1_ajo2b")
+modeOff = NodePath("ModeOff")
+modeOn = NodePath("ModeOn")
+inputBufferA = NodePath("InputBufferA")
+
+[node name="ModeOff" type="Node2D" parent="."]
+position = Vector2(0, 16)
+
+[node name="Back" type="Sprite2D" parent="ModeOff"]
+texture = SubResource("AtlasTexture_wa2vq")
+
+[node name="Cover" type="Sprite2D" parent="ModeOff"]
+z_index = 1
+position = Vector2(0, 7)
+texture = SubResource("AtlasTexture_4kyn5")
+
+[node name="ModeOn" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, 16)
+
+[node name="Back" type="Sprite2D" parent="ModeOn"]
+texture = SubResource("AtlasTexture_aq6kc")
+
+[node name="Cover" type="Sprite2D" parent="ModeOn"]
+z_index = 1
+position = Vector2(0, 7)
+texture = SubResource("AtlasTexture_xp25l")
+
+[node name="OnSound" type="Node2D" parent="."]
+position = Vector2(0, 16)
+script = ExtResource("3_h6td7")
+gain_db = -10
+SOUND_PATH = "res://Audio/SFX/ding.wav"
+
+[node name="FailSound" type="Node2D" parent="."]
+position = Vector2(0, 16)
+script = ExtResource("3_h6td7")
+gain_db = -10
+SOUND_PATH = "res://Audio/SFX/fail_sound.wav"
+
+[node name="InputBufferA" type="Node2D" parent="."]
+position = Vector2(0, 33)
+script = ExtResource("4_0p21m")
+
+[node name="SoundPool" type="Node2D" parent="InputBufferA"]
+script = ExtResource("3_h6td7")
+SOUND_PATH = "res://Audio/SFX/tongue_click.wav"
