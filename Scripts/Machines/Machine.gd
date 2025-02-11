@@ -49,10 +49,9 @@ func try_accept_input(from: Vector2i, to: Vector2i, letter: Letter) -> bool:
 
 func try_send_to_output(machine_map: Dictionary, letter: Letter, index: int = 0) -> bool:
 	var io: MachineIO = self.get_output(index)
-	if io.to in machine_map.keys():
-		var other_machine: Machine = machine_map[io.to]
-		if other_machine.can_accept_input(io.from, io.to):
-			return other_machine.try_accept_input(io.from, io.to, letter)
+	var other_machine: Machine = machine_map.get(io.to)
+	if other_machine and other_machine.can_accept_input(io.from, io.to):
+		return other_machine.try_accept_input(io.from, io.to, letter)
 	return false
 
 
@@ -72,19 +71,18 @@ func process_output_buffer(machine_map: Dictionary, index: int, buffer: LetterBu
 	if buffer.is_full:
 		buffer.dequeue_to_hand()
 	
-	var io: MachineIO = self.get_output(index)
-	# If there's a machine at the output...
-	if io.to in machine_map.keys():
-		var other_machine: Machine = machine_map[io.to]
+	# If our output buffer is now holding a letter ...
+	if buffer.held_letter != null:
+		var io: MachineIO = self.get_output(index)
+		# ... and there's a machine at the output...
+		var other_machine: Machine = machine_map.get(io.to)
 		# ... and that machine has a corresponding input...
-		if other_machine.can_accept_input(io.from, io.to):
-			# ... and our output buffer is holding a letter ...
-			if buffer.held_letter != null:
-				# ... and the other machine accepts the letter ...
-				if other_machine.try_accept_input(io.from, io.to, buffer.held_letter):
-					# ... the letter has been taken in by the other machine,
-					# we can delete our buffer's reference
-					buffer.clear_held_letter()
+		if other_machine and other_machine.can_accept_input(io.from, io.to):
+			# ... and the other machine accepts the letter ...
+			if other_machine.try_accept_input(io.from, io.to, buffer.held_letter):
+				# ... the letter has been taken in by the other machine,
+				# we can delete our buffer's reference
+				buffer.clear_held_letter()
 
 func get_held_items() -> Array:
 	return []

@@ -121,7 +121,7 @@ func place_machine(index: int, pos_index: Vector2i) -> Machine:
 	#print("Creating prefab:", prefab.name)
 	prefab.scale = Vector2.ONE * 1.2
 	create_tween().tween_property(prefab, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_QUAD)
-	machineManager.add_child(prefab)
+	machineManager.add_machine_child(prefab)
 	
 	if index == 2: # miner
 		for x in range(prefab.discrete_shape.x):

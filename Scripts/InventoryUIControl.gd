@@ -22,7 +22,7 @@ const slot_tooltips = [
 func set_selected_slot(slot: int):
 	if slot >= 0 and slot < len(slotTextures):
 		highlightTexture.visible = true
-		highlightTexture.position.x = -164 + 64 * slot
+		highlightTexture.position.x = -196 + 64 * slot
 		slotLabel.text = slot_names[slot]
 		tooltipLabel.text = slot_tooltips[slot]
 	else:

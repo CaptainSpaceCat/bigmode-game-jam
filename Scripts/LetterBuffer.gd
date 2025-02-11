@@ -96,6 +96,7 @@ func get_held_items() -> Array:
 func try_play_sound() -> bool:
 	if has_node("SoundPool"):
 		var sound_pool = $SoundPool as SoundPool
-		sound_pool.play_sound()
+		if sound_pool != null:
+			sound_pool.play_sound()
 		return true
 	return false
