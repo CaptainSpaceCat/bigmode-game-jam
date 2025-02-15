@@ -109,6 +109,7 @@ region = Rect2(160, 0, 32, 32)
 [node name="Main Scene" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("default_bounds")]
+position = Vector2(360, 113)
 zoom = Vector2(4, 4)
 script = ExtResource("1_8n3nr")
 default_bounds = NodePath("../CameraBounds/Stage1Bounds/CollisionShape2D")
@@ -127,129 +128,133 @@ tile_set = SubResource("TileSet_3f3js")
 script = ExtResource("6_n1tf0")
 tick_interval = 0.2
 
-[node name="Hub" parent="MachineManager" node_paths=PackedStringArray("cameraBoundsStage2") instance=ExtResource("9_h6lbg")]
+[node name="AnimationTimer" type="Timer" parent="MachineManager"]
+
+[node name="MachineParent" type="Node2D" parent="MachineManager"]
+
+[node name="Hub" parent="MachineManager/MachineParent" node_paths=PackedStringArray("cameraBoundsStage2") instance=ExtResource("9_h6lbg")]
 position = Vector2(344, 88)
-cameraBoundsStage2 = NodePath("../../CameraBounds/Stage2Bounds/CollisionShape2D")
+cameraBoundsStage2 = NodePath("../../../CameraBounds/Stage2Bounds/CollisionShape2D")
 
-[node name="WallClosedMain" parent="MachineManager" node_paths=PackedStringArray("cameraBoundsStage3") instance=ExtResource("12_6uhrm")]
+[node name="WallClosedMain" parent="MachineManager/MachineParent" node_paths=PackedStringArray("cameraBoundsStage3") instance=ExtResource("12_6uhrm")]
 position = Vector2(-248, 120)
-cameraBoundsStage3 = NodePath("../../CameraBounds/Stage3Bounds/CollisionShape2D")
+cameraBoundsStage3 = NodePath("../../../CameraBounds/Stage3Bounds/CollisionShape2D")
 
-[node name="WallChunk" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 104)
 
-[node name="WallChunk2" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk2" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 88)
 
-[node name="WallChunk3" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk3" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 72)
 
-[node name="WallChunk7" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk7" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 56)
 
-[node name="WallChunk8" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk8" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 40)
 
-[node name="WallChunk9" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk9" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 24)
 
-[node name="WallChunk10" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk10" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 8)
 
-[node name="WallChunk11" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk11" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -8)
 
-[node name="WallChunk12" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk12" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -24)
 
-[node name="WallChunk13" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk13" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -40)
 
-[node name="WallChunk14" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk14" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -56)
 
-[node name="WallChunk15" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk15" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -72)
 
-[node name="WallChunk16" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk16" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -88)
 
-[node name="WallChunk17" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk17" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -104)
 
-[node name="WallChunk18" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk18" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -120)
 
-[node name="WallChunk19" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk19" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -136)
 
-[node name="WallChunk20" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk20" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -152)
 
-[node name="WallChunk21" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk21" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, -168)
 
-[node name="WallChunk4" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk4" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 200)
 flipped = true
 
-[node name="WallChunk5" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk5" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 184)
 flipped = true
 
-[node name="WallChunk6" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk6" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 168)
 flipped = true
 
-[node name="WallChunk22" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk22" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 248)
 flipped = true
 
-[node name="WallChunk23" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk23" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 232)
 flipped = true
 
-[node name="WallChunk24" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk24" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 216)
 flipped = true
 
-[node name="WallChunk25" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk25" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 296)
 flipped = true
 
-[node name="WallChunk26" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk26" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 280)
 flipped = true
 
-[node name="WallChunk27" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk27" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 264)
 flipped = true
 
-[node name="WallChunk28" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk28" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 344)
 flipped = true
 
-[node name="WallChunk29" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk29" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 328)
 flipped = true
 
-[node name="WallChunk30" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk30" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 312)
 flipped = true
 
-[node name="WallChunk31" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk31" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 392)
 flipped = true
 
-[node name="WallChunk32" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk32" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 376)
 flipped = true
 
-[node name="WallChunk33" parent="MachineManager" instance=ExtResource("13_spm3p")]
+[node name="WallChunk33" parent="MachineManager/MachineParent" instance=ExtResource("13_spm3p")]
 position = Vector2(-248, 360)
 flipped = true
 
-[node name="Lightbulb" parent="MachineManager" instance=ExtResource("8_vr1jn")]
+[node name="Lightbulb" parent="MachineManager/MachineParent" instance=ExtResource("8_vr1jn")]
 position = Vector2(456, 152)
 
 [node name="MachineCursor" type="Node2D" parent="." node_paths=PackedStringArray("inventoryUI", "oreVeinLayer")]
@@ -356,7 +361,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control"]
 layout_mode = 2
-offset_left = -160.0
+offset_left = -192.0
 offset_top = -31.0
 offset_bottom = 1.0
 scale = Vector2(2, 2)
@@ -394,9 +399,9 @@ layout_mode = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/CenterContainer/Control4"]
 layout_mode = 2
-offset_left = -160.0
-offset_top = -31.0
-offset_bottom = 1.0
+offset_left = -192.0
+offset_top = -30.9999
+offset_bottom = 1.00006
 scale = Vector2(2, 2)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer"]

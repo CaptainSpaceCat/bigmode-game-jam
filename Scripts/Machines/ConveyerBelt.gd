@@ -62,12 +62,11 @@ func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 func perform_cycle(machine_map: Dictionary) -> void:
 	# try to move item from slot B into the next tile
 	if slotB != null:
-		var io: MachineIO = super.get_output(0)
-		if io.to in machine_map.keys():
-			var other_machine: Machine = machine_map[io.to]
-			if other_machine.can_accept_input(io.from, io.to):
-				if other_machine.try_accept_input(io.from, io.to, slotB):
-					slotB = null
+		var io: MachineIO = get_output(0)
+		var other_machine: Machine = machine_map.get(io.to)
+		if other_machine and other_machine.can_accept_input(io.from, io.to):
+			if other_machine.try_accept_input(io.from, io.to, slotB):
+				slotB = null
 					
 	# try to move item in slot A to slot B
 	if slotA != null:
