@@ -25,14 +25,14 @@ func _ready():
 			register_machine(grid_pos, child)
 	
 	# start the timer ticking!
-	animationTimer.timeout.connect(_on_animation_tick)
+	animationTimer.timeout.connect(_trigger_animation_tick)
 	animationTimer.start(tick_interval)
 
-func _on_animation_tick():
+func _trigger_animation_tick():
 	if is_updating:
 		printerr("Attempting next update tick before previous update complete!")
-	GlobalSignals.animation_tick.emit()
 	update_all_machines()
+	GlobalSignals.animation_tick.emit()
 	
 
 func add_machine_child(m: Machine) -> void:
@@ -79,12 +79,18 @@ const MAX_TIME_PER_FRAME : float = 0.005
 
 func update_all_machines() -> void:
 	is_updating = true
+	update_stack.clear()
 	
 	for m in machine_map.values():
+		if not m:
+			continue
 		m.update_flag = true
 	
 	# Recursively evaluate the state of the machines
 	for m: Machine in machine_map.values():
+		if not m:
+			continue
+			
 		var start_time = Time.get_ticks_msec()  # Get start time in milliseconds
 		
 		if m.update_flag:
@@ -112,8 +118,9 @@ func update_all_machines() -> void:
 			
 			# Yield after a set amount of processing time, allowing the game to continue
 			if (Time.get_ticks_msec() - start_time) / 1000.0 >= MAX_TIME_PER_FRAME:
-				print("Yielding")
-				await get_tree().process_frame
+				pass
+				#print("Yielding")
+				#await get_tree().process_frame
 	# Mark the machine manager as no longer updating
 	is_updating = false
 
