@@ -89,7 +89,7 @@ func get_held_items() -> Array:
 
 func _exit_tree():
 	for item in get_held_items():
-		item.queue_free()	
+		item.queue_free()
 
 
 # Store and retrieve IO objects
@@ -139,9 +139,9 @@ func get_relative_direction(from: Vector2i, to: Vector2i) -> int:
 
 func unregister_self() -> void:
 	# Assume that all machines are instantiated as children of MachineManager
-	var parent = get_parent()
+	var parent = get_parent().get_parent()
 	if parent is MachineManager:
 		parent = parent as MachineManager
 		parent.unregister_machine(self)
 	else:
-		printerr("Cannot unregister unparented machine: ", get_class())
+		printerr("Cannot unregister improperly parented machine: ", get_class())

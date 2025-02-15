@@ -46,7 +46,7 @@ func register_machine(pos: Vector2i, machine: Machine) -> void:
 			var key = pos + Vector2i(x, y)
 			machine_map[key] = machine
 
-# Unregister a machine from a specific position
+# Unregister a specific machine
 func unregister_machine(machine: Machine) -> void:
 	var to_remove = []
 	for k in machine_map.keys():
@@ -96,6 +96,8 @@ func update_all_machines() -> void:
 		if m.update_flag:
 			m.update_flag = false
 			update_stack.append(m)
+		else:
+			continue
 			
 		while len(update_stack) > 0:
 			# peek at the top of the stack
