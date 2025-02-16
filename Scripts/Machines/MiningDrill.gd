@@ -5,6 +5,7 @@ extends Machine
 @export var bufferOutA: LetterBuffer
 @export var bufferOutB: LetterBuffer
 @export var baseSprite: Sprite2D
+@export var particleEmitter: GPUParticles2D
 
 var chosen_output: LetterBuffer
 
@@ -25,11 +26,15 @@ func set_word(new_word: String):
 	self.word = new_word
 
 func perform_cycle(machine_map: Dictionary) -> void:
+	if cycle_index >= len(word):
+		particleEmitter.emitting = false
+	
 	# Send a new word to the output every n cycles
 	# Suspend if the output is blocked
 	if cycle_index >= len(word) + delay_cycles:
 		if chosen_output.try_apply_string(word.reverse()):
 			cycle_index = 0
+			particleEmitter.emitting = true
 	cycle_index += 1
 	
 	process_output_buffer(machine_map, 0, bufferOutA)

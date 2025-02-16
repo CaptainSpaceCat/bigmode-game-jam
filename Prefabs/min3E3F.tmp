@@ -111,7 +111,7 @@ z_index = 1
 position = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_wqqt0")
 autoplay = "default"
-frame_progress = 0.255912
+frame_progress = 0.471249
 
 [node name="OutputSlotA" type="Node2D" parent="."]
 position = Vector2(16, 0)
