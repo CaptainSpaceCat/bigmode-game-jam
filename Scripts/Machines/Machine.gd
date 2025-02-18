@@ -7,12 +7,6 @@ var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
 var unlocked_by_default: bool = true
 var is_destructible: bool = true
 
-@export var debug_enabled: bool = false
-
-func _process(delta):
-	if debug_enabled:
-		queue_redraw()
-
 # accepts a vector2i position on the world grid
 # returns the same vector relative to this machine's origin
 func grid_to_local(pos: Vector2i) -> Vector2i:
@@ -91,6 +85,12 @@ func _exit_tree():
 	for item in get_held_items():
 		item.queue_free()
 
+
+func shrink_and_free(duration: float = 0.2):
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2.ZERO, duration)
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.connect("finished", Callable(self, "queue_free"))
 
 # Store and retrieve IO objects
 

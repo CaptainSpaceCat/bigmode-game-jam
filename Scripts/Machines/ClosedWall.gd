@@ -28,7 +28,7 @@ func perform_cycle(machine_map: Dictionary) -> void:
 					m.mark_for_delete()
 			get_viewport().get_camera_2d().change_bounds(cameraBoundsStage3)
 			unregister_self()
-			queue_free()
+			shrink_and_free()
 		else:
 			fail_sound.play_sound()
 

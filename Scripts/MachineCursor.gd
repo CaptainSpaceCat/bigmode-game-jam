@@ -146,7 +146,7 @@ func clear_machine(pos: Vector2i):
 		for item: Letter in machine.get_held_items():
 			item.queue_free()
 		machineManager.unregister_machine(machine)
-		machine.queue_free()
+		machine.shrink_and_free()
 
 func unlock_machine(index: int):
 	machine_unlocked[index] = true

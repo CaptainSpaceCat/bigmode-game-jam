@@ -27,7 +27,7 @@ func perform_cycle(machine_map: Dictionary) -> void:
 		if m != null and m is WallChunk:
 			m.mark_for_delete()
 		unregister_self()
-		queue_free()
+		shrink_and_free()
 
 func mark_for_delete() -> void:
 	delete_next_cycle = true

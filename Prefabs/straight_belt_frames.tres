@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://doffradgjy7vp"]
+
+[ext_resource type="Texture2D" uid="uid://dqifbl4tda05b" path="res://Textures/animated_belt_sheet.png" id="1_hbtia"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blk8s"]
+atlas = ExtResource("1_hbtia")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5v3ne"]
+atlas = ExtResource("1_hbtia")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cnv6"]
+atlas = ExtResource("1_hbtia")
+region = Rect2(32, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blk8s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5v3ne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cnv6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
