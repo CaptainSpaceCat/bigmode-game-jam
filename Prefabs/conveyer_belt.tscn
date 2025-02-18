@@ -1,11 +1,66 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgdutg52x26go"]
+[gd_scene load_steps=13 format=3 uid="uid://cgdutg52x26go"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/ConveyerBelt.gd" id="1_j6j8e"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_6i4g8"]
+[ext_resource type="Texture2D" uid="uid://dqifbl4tda05b" path="res://Textures/animated_belt_sheet.png" id="2_gpiut"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_riie8"]
-atlas = ExtResource("2_6i4g8")
-region = Rect2(0, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_blk8s"]
+atlas = ExtResource("2_gpiut")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5v3ne"]
+atlas = ExtResource("2_gpiut")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cnv6"]
+atlas = ExtResource("2_gpiut")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8md5v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blk8s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5v3ne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cnv6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mpb4"]
+atlas = ExtResource("2_gpiut")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kj5na"]
+atlas = ExtResource("2_gpiut")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntahp"]
+atlas = ExtResource("2_gpiut")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c1sdi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mpb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kj5na")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntahp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fy7m0"]
 atlas = ExtResource("2_6i4g8")
@@ -14,14 +69,29 @@ region = Rect2(16, 80, 16, 16)
 [node name="ConveyerStraight" type="Node2D" node_paths=PackedStringArray("item_render_positions", "spriteStraight", "spriteBent")]
 script = ExtResource("1_j6j8e")
 item_render_positions = [NodePath("Render0"), NodePath("Render1"), NodePath("Render2"), NodePath("Render3")]
-spriteStraight = NodePath("SpriteStraight")
-spriteBent = NodePath("SpriteBent")
+spriteStraight = NodePath("AnimatedSpriteStraight")
+spriteBent = NodePath("AnimatedSpriteBent")
 debug_enabled = true
 
+[node name="AnimatedSpriteStraight" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8md5v")
+autoplay = "default"
+
+[node name="AnimatedSpriteBent" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_c1sdi")
+autoplay = "default"
+frame = 1
+frame_progress = 0.309293
+
 [node name="SpriteStraight" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_riie8")
+visible = false
+texture = ExtResource("2_gpiut")
+hframes = 3
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 16)
 
 [node name="SpriteBent" type="Sprite2D" parent="."]
+visible = false
 texture = SubResource("AtlasTexture_fy7m0")
 
 [node name="Render0" type="Node2D" parent="."]

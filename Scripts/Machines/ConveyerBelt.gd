@@ -84,8 +84,8 @@ func get_held_items() -> Array:
 		items.append(slotB)
 	return items
 
-@export var spriteStraight: Sprite2D
-@export var spriteBent: Sprite2D
+@export var spriteStraight: AnimatedSprite2D
+@export var spriteBent: AnimatedSprite2D
 
 func _draw():
 	if debug_enabled:
