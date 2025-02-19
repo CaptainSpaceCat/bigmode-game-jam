@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/LetterBuffer.gd" id="3_m11u8"]
 [ext_resource type="Texture2D" uid="uid://ca4c032bhmddh" path="res://Textures/animated_miner_sheet.png" id="3_wo4oe"]
 [ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="4_kxhdo"]
-[ext_resource type="Texture2D" uid="uid://drcism6hewil7" path="res://Textures/copper.png" id="6_wcxjk"]
+[ext_resource type="Texture2D" uid="uid://ca6whxxexkuh5" path="res://Textures/miner_rock_chunks.png" id="6_smada"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5nc0p"]
 atlas = ExtResource("2_tlr4t")
@@ -137,5 +137,5 @@ position = Vector2(8, 8)
 emitting = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_s55pu")
-texture = ExtResource("6_wcxjk")
+texture = ExtResource("6_smada")
 lifetime = 0.5

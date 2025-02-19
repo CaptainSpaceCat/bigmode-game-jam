@@ -20,6 +20,7 @@ config/icon="res://Textures/icon.ico"
 
 buses/default_bus_layout="res://main_bus_layout.tres"
 driver/output_latency=5
+driver/output_latency.web=15
 
 [autoload]
 

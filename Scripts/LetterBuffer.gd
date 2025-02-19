@@ -8,6 +8,8 @@ var queue_delete: Letter
 var letterPrefab: PackedScene = preload("res://Prefabs/letter.tscn")
 @onready var itemParent: Node2D = get_node("/root/Main Scene/ItemManager")
 
+var sound_ready: bool = false
+
 # Appends the provided letter to the end of the buffer
 # Returns success state
 func try_append(letter: Letter) -> bool:
@@ -22,7 +24,7 @@ func try_append(letter: Letter) -> bool:
 			letter.send_to(global_position)
 			queue_delete = letter
 			# Play a sound for this input, if we have one
-			try_play_sound()
+			sound_ready = true
 		if len(l) == 0: # Check for EOF
 			is_full = true
 			# Free the EOF letter now to avoid having to wait a cycle or more
@@ -61,7 +63,7 @@ func dequeue_to_hand():
 			content = content.substr(1)
 			if l != " ": # Adding space characters to the buffer will force it to skip machine ticks
 				# Play a sound for this output
-				try_play_sound()
+				sound_ready = true
 				# Create the letter
 				var letter: Letter = letterPrefab.instantiate()
 				letter.set_letter(l)
@@ -93,10 +95,20 @@ func get_held_items() -> Array:
 		items.append(queue_delete)
 	return items
 
-func try_play_sound() -> bool:
-	if has_node("SoundPool"):
+
+func try_play_sound():
+	if sound_ready and has_node("SoundPool"):
+		sound_ready = false
 		var sound_pool = $SoundPool as SoundPool
 		if sound_pool != null:
 			sound_pool.play_sound()
-		return true
-	return false
+
+
+func _ready():
+	GlobalSignals.animation_tick.connect(_on_animation_tick)
+
+func _exit_tree():
+	GlobalSignals.animation_tick.disconnect(_on_animation_tick)
+
+func _on_animation_tick():
+	try_play_sound()

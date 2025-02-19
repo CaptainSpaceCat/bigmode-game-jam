@@ -15,7 +15,7 @@ const GAIN_EXTRA: float = 15
 func _ready():
 	var sound_resource = load(SOUND_PATH)
 	if sound_resource == null:
-		push_error("Failed to load tick sound: " + SOUND_PATH)
+		push_error("Failed to load sound: " + SOUND_PATH)
 		return
 
 	for i in range(pool_size):
