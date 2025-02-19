@@ -25,6 +25,7 @@ var previous_belt_pos: Vector2i = Vector2i.ONE * 1000
 var previous_mouse_drag_pos: Vector2i = Vector2i.ONE * 10000
 
 func _ready():
+	GlobalSignals.select_inventory_slot.connect(_on_inventory_slot_selected)
 	# read machine data from temporary prefab instances
 	var i = 0
 	for prefab in available_machines:
@@ -40,6 +41,11 @@ func _ready():
 		i += 1
 	print(machine_shapes)
 
+func _on_inventory_slot_selected(index: int):
+	if index < available_machines.size() and selected_machine_index != index and machine_unlocked[index]:
+		selected_machine_index = index
+		inventoryUI.set_selected_slot(selected_machine_index)
+		print("Selected machine: " + str(selected_machine_index))
 
 func _process(delta):
 	# Request a redraw to update cursor visuals
@@ -49,9 +55,10 @@ func _process(delta):
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		previous_mouse_drag_pos = Vector2i.ONE * 10000
 		previous_belt_pos = Vector2i.ONE * 1000
+		is_LMB_down = false
 		
 	# Handle left clicking to place machines
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if is_LMB_down: #use this variable so that only unhandled clicks will trigger machine placement
 		var pos = machineManager.snap_to_grid(get_global_mouse_position())
 		if selected_machine_index > -1 and pos != previous_mouse_drag_pos:
 			previous_mouse_drag_pos = pos
@@ -162,10 +169,7 @@ func _input(event):
 				print("Cleared machine selection")
 			elif event.keycode >= KEY_1 and event.keycode <= KEY_9:
 				var new_index = event.keycode - KEY_1
-				if new_index < available_machines.size() and selected_machine_index != new_index and machine_unlocked[new_index]:
-					selected_machine_index = new_index
-					inventoryUI.set_selected_slot(selected_machine_index)
-					print("Selected machine: " + str(selected_machine_index))
+				_on_inventory_slot_selected(new_index)
 			else:
 				# all keys uncaught above get sent to the machine we're hovering over, if any
 				var pos = machineManager.snap_to_grid(get_global_mouse_position())
@@ -182,6 +186,11 @@ func _input(event):
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 				m.handle_key_press(KEY_DOWN)
 
+var is_LMB_down: bool = false
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			is_LMB_down = true
 
 # Debug draw mode, might be used in the actual game tbh
 func _draw():

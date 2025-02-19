@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://cb7b13t8s4p26"]
+[gd_scene load_steps=37 format=4 uid="uid://cb7b13t8s4p26"]
 
 [ext_resource type="Script" path="res://Scripts/CameraMover.gd" id="1_8n3nr"]
 [ext_resource type="Texture2D" uid="uid://br8ruipm44ww" path="res://Textures/background_quick.png" id="1_rrgag"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://chajj8i2bccpa" path="res://Textures/inventory_UI.png" id="14_rbadk"]
 [ext_resource type="Texture2D" uid="uid://b74hr332acssi" path="res://Textures/invo_slot_selected.png" id="15_7t8og"]
 [ext_resource type="Texture2D" uid="uid://dbnnjrfkecgew" path="res://Textures/ui_machine_bar.png" id="18_4pv33"]
+[ext_resource type="Script" path="res://Scripts/HotbarSelector.gd" id="19_2tkyx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7ctax"]
 texture = ExtResource("1_rrgag")
@@ -284,6 +285,7 @@ global_sound = true
 unique_name_in_owner = true
 
 [node name="CameraBounds" type="Node2D" parent="."]
+visible = false
 
 [node name="Stage1Bounds" type="Area2D" parent="CameraBounds"]
 
@@ -322,6 +324,7 @@ offset_right = 4.0
 offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
@@ -357,6 +360,7 @@ offset_bottom = 1.99994
 
 [node name="Control" type="Control" parent="CanvasLayer/Control/CenterContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control"]
 layout_mode = 2
@@ -409,24 +413,36 @@ theme_override_constants/separation = 0
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 0
 texture = SubResource("AtlasTexture_w2cex")
+script = ExtResource("19_2tkyx")
 
 [node name="TextureRect6" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_drkue")
+script = ExtResource("19_2tkyx")
+index = 1
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_wl8yx")
+script = ExtResource("19_2tkyx")
+index = 2
 
 [node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_pfkf0")
+script = ExtResource("19_2tkyx")
+index = 3
 
 [node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_gd7hw")
+script = ExtResource("19_2tkyx")
+index = 4
 
 [node name="TextureRect5" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_mjv1g")
+script = ExtResource("19_2tkyx")
+index = 5
