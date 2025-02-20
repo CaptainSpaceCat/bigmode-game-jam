@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b2renfhq6jpy8"]
+[gd_scene load_steps=20 format=3 uid="uid://b2renfhq6jpy8"]
 
 [ext_resource type="Script" path="res://Scripts/Machines/MiningDrill.gd" id="1_y23cw"]
 [ext_resource type="Texture2D" uid="uid://ckpntsrwt0llj" path="res://Textures/machines_quick.png" id="2_tlr4t"]
@@ -7,9 +7,13 @@
 [ext_resource type="Script" path="res://Scripts/SoundPool.gd" id="4_kxhdo"]
 [ext_resource type="Texture2D" uid="uid://ca6whxxexkuh5" path="res://Textures/miner_rock_chunks.png" id="6_smada"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayvef"]
+atlas = ExtResource("2_tlr4t")
+region = Rect2(0, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5nc0p"]
 atlas = ExtResource("2_tlr4t")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(4, 4, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s15jj"]
 atlas = ExtResource("3_wo4oe")
@@ -94,16 +98,20 @@ scale_min = 0.5
 scale_max = 0.7
 anim_offset_max = 1.0
 
-[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA", "bufferOutB", "baseSprite", "particleEmitter")]
+[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA", "particleEmitter")]
 script = ExtResource("1_y23cw")
 generate_pos = NodePath("OutputSlotA")
 bufferOutA = NodePath("OutputSlotA")
-bufferOutB = NodePath("OutputSlotB")
-baseSprite = NodePath("Base")
 particleEmitter = NodePath("GPUParticles2D")
 
-[node name="Base" type="Sprite2D" parent="."]
+[node name="ModeA" type="Node2D" parent="."]
 position = Vector2(8, 8)
+
+[node name="Base" type="Sprite2D" parent="ModeA"]
+texture = SubResource("AtlasTexture_ayvef")
+
+[node name="Cover" type="Sprite2D" parent="ModeA"]
+z_index = 1
 texture = SubResource("AtlasTexture_5nc0p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -118,14 +126,6 @@ position = Vector2(16, 0)
 script = ExtResource("3_m11u8")
 
 [node name="SoundPool" type="Node2D" parent="OutputSlotA"]
-script = ExtResource("4_kxhdo")
-gain_db = -32
-SOUND_PATH = "res://Audio/SFX/crush.wav"
-
-[node name="OutputSlotB" type="Node2D" parent="."]
-script = ExtResource("3_m11u8")
-
-[node name="SoundPool" type="Node2D" parent="OutputSlotB"]
 script = ExtResource("4_kxhdo")
 gain_db = -32
 SOUND_PATH = "res://Audio/SFX/crush.wav"

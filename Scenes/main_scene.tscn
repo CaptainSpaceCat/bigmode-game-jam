@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://cb7b13t8s4p26"]
+[gd_scene load_steps=38 format=4 uid="uid://cb7b13t8s4p26"]
 
 [ext_resource type="Script" path="res://Scripts/CameraMover.gd" id="1_8n3nr"]
 [ext_resource type="Texture2D" uid="uid://br8ruipm44ww" path="res://Textures/background_quick.png" id="1_rrgag"]
@@ -77,6 +77,12 @@ font_color = Color(0.257777, 0.596779, 0.904211, 1)
 outline_size = 7
 outline_color = Color(0.245571, 0.000259617, 0.723395, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_rev78"]
+font_size = 25
+font_color = Color(1, 0, 0.0166664, 1)
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_uuwp5"]
 font_size = 30
 font_color = Color(0.403922, 0.733333, 1, 1)
@@ -133,8 +139,9 @@ tick_interval = 0.2
 
 [node name="MachineParent" type="Node2D" parent="MachineManager"]
 
-[node name="Hub" parent="MachineManager/MachineParent" node_paths=PackedStringArray("cameraBoundsStage2") instance=ExtResource("9_h6lbg")]
+[node name="Hub" parent="MachineManager/MachineParent" node_paths=PackedStringArray("inventoryUI", "cameraBoundsStage2") instance=ExtResource("9_h6lbg")]
 position = Vector2(344, 88)
+inventoryUI = NodePath("../../../CanvasLayer")
 cameraBoundsStage2 = NodePath("../../../CameraBounds/Stage2Bounds/CollisionShape2D")
 
 [node name="WallClosedMain" parent="MachineManager/MachineParent" node_paths=PackedStringArray("cameraBoundsStage3") instance=ExtResource("12_6uhrm")]
@@ -305,64 +312,81 @@ shape = SubResource("RectangleShape2D_x7gee")
 position = Vector2(-59.5, 117.5)
 shape = SubResource("RectangleShape2D_deaad")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("highlightTexture", "slotLabel", "slotTextures", "tooltipLabel")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("highlightTexture", "slotLabel", "slotTextures", "tooltipLabel", "alertLabel")]
 layer = 10
 script = ExtResource("14_iv6m3")
-highlightTexture = NodePath("Control/CenterContainer/Control2/TextureRect")
-slotLabel = NodePath("Control/CenterContainer/Control3/CenterContainer/Label")
-slotTextures = [NodePath("Control/CenterContainer/Control4/CenterContainer/HBoxContainer/TextureRect"), NodePath("Control/CenterContainer/Control4/CenterContainer/HBoxContainer/TextureRect6"), NodePath("Control/CenterContainer/Control4/CenterContainer/HBoxContainer/TextureRect2"), NodePath("Control/CenterContainer/Control4/CenterContainer/HBoxContainer/TextureRect3"), NodePath("Control/CenterContainer/Control4/CenterContainer/HBoxContainer/TextureRect4"), NodePath("Control/CenterContainer/Control4/CenterContainer/HBoxContainer/TextureRect5")]
-tooltipLabel = NodePath("Control/CenterContainer2/Control/Label")
+highlightTexture = NodePath("Control2/CenterContainer/HotbarSlotSelected/TextureRect")
+slotLabel = NodePath("Control2/CenterContainer/ItemNames/CenterContainer/Label")
+slotTextures = [NodePath("Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer/TextureRect"), NodePath("Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer/TextureRect6"), NodePath("Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer/TextureRect2"), NodePath("Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer/TextureRect3"), NodePath("Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer/TextureRect4"), NodePath("Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer/TextureRect5")]
+tooltipLabel = NodePath("Control/Label")
+alertLabel = NodePath("Control3/Label")
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 6.0
-offset_right = 4.0
-offset_bottom = 6.0
-grow_horizontal = 2
-grow_vertical = 2
+anchor_right = 0.231
+anchor_bottom = 0.267
+offset_left = 50.0
+offset_top = 50.0
+offset_right = -0.112
+offset_bottom = -0.0160065
 mouse_filter = 2
 
-[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 19.0
-offset_right = 359.0
-offset_bottom = 103.0
-
-[node name="Control" type="Control" parent="CanvasLayer/Control/CenterContainer2"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/CenterContainer2/Control"]
-layout_mode = 2
-offset_left = -174.0
-offset_top = -41.0
-offset_right = 179.0
-offset_bottom = 40.0
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 label_settings = SubResource("LabelSettings_eishu")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+[node name="Control3" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_left = 0.75
+anchor_right = 1.0
+anchor_bottom = 0.267
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = -0.0160065
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control3"]
+custom_minimum_size = Vector2(200, 20)
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.773
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 17.0
-offset_top = 2.09595
-offset_right = -16.0
-offset_bottom = 1.99994
+offset_top = -200.0
+offset_bottom = -200.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_rev78")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/CenterContainer"]
+[node name="Control2" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_top = 0.823
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.304016
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HotbarBackground" type="Control" parent="CanvasLayer/Control2/CenterContainer"]
 layout_mode = 2
 mouse_filter = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarBackground"]
 layout_mode = 2
 offset_left = -192.0
 offset_top = -31.0
@@ -370,10 +394,10 @@ offset_bottom = 1.0
 scale = Vector2(2, 2)
 texture = ExtResource("14_rbadk")
 
-[node name="Control2" type="Control" parent="CanvasLayer/Control/CenterContainer"]
+[node name="HotbarSlotSelected" type="Control" parent="CanvasLayer/Control2/CenterContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control2"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarSlotSelected"]
 visible = false
 layout_mode = 0
 offset_left = -100.0
@@ -383,65 +407,65 @@ offset_bottom = 1.0
 scale = Vector2(2, 2)
 texture = ExtResource("15_7t8og")
 
-[node name="Control3" type="Control" parent="CanvasLayer/Control/CenterContainer"]
+[node name="ItemNames" type="Control" parent="CanvasLayer/Control2/CenterContainer"]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/CenterContainer/Control3"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/CenterContainer/ItemNames"]
 layout_mode = 0
 offset_left = -159.0
 offset_top = -87.0
 offset_right = 159.0
 offset_bottom = -38.0
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/CenterContainer/Control3/CenterContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Control2/CenterContainer/ItemNames/CenterContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_uuwp5")
 
-[node name="Control4" type="Control" parent="CanvasLayer/Control/CenterContainer"]
+[node name="HotbarItems" type="Control" parent="CanvasLayer/Control2/CenterContainer"]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/CenterContainer/Control4"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/CenterContainer/HotbarItems"]
 layout_mode = 2
 offset_left = -192.0
 offset_top = -30.9999
 offset_bottom = 1.00006
 scale = Vector2(2, 2)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 0
 texture = SubResource("AtlasTexture_w2cex")
 script = ExtResource("19_2tkyx")
 
-[node name="TextureRect6" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
+[node name="TextureRect6" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_drkue")
 script = ExtResource("19_2tkyx")
 index = 1
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_wl8yx")
 script = ExtResource("19_2tkyx")
 index = 2
 
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_pfkf0")
 script = ExtResource("19_2tkyx")
 index = 3
 
-[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_gd7hw")
 script = ExtResource("19_2tkyx")
 index = 4
 
-[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/Control/CenterContainer/Control4/CenterContainer/HBoxContainer"]
+[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_mjv1g")
 script = ExtResource("19_2tkyx")

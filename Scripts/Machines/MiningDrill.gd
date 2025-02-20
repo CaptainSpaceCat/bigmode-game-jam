@@ -3,20 +3,15 @@ extends Machine
 
 @export var generate_pos: Node2D
 @export var bufferOutA: LetterBuffer
-@export var bufferOutB: LetterBuffer
-@export var baseSprite: Sprite2D
+@onready var baseSpriteNode: Node2D = $ModeA
 @export var particleEmitter: GPUParticles2D
 
-var chosen_output: LetterBuffer
-
 func _ready():
-	chosen_output = bufferOutA
+	direction = 1
+	set_directional_output(direction)
 
 func _init():
 	self.discrete_shape = Vector2i.ONE*2
-	self.add_output(Vector2i(1,0), Vector2i(2,0))
-	#self.add_output(Vector2i.ZERO, Vector2i.LEFT)
-
 
 var word: String = ""
 var cycle_index: int = 1000 # Start out ready to dump ores immediately
@@ -32,7 +27,7 @@ func perform_cycle(machine_map: Dictionary) -> void:
 	# Send a new word to the output every n cycles
 	# Suspend if the output is blocked
 	if cycle_index >= len(word) + delay_cycles:
-		if chosen_output.try_apply_string(word.reverse()):
+		if bufferOutA.try_apply_string(word.reverse()):
 			cycle_index = 0
 			particleEmitter.emitting = true
 	cycle_index += 1
@@ -44,31 +39,39 @@ func get_held_items() -> Array:
 	var items = []
 	for item in bufferOutA.get_held_items():
 		items.append(item)
-	for item in bufferOutB.get_held_items():
-		items.append(item)
 	return items
 
-var flipped: bool = false
-'''
+var direction: int = 1
 func handle_key_press(key: int):
 	if key == KEY_T:
-		flipped = !flipped
+		direction = (direction + 1) % 4
+		set_directional_output(direction)
+		animate_rotate()
 		
-		var old_output = chosen_output
-		if flipped:
-			chosen_output = bufferOutB
-		else:
-			chosen_output = bufferOutA
-		
-		# Move the contents of the output buffer to the new output buffer
-		chosen_output.try_apply_string(old_output.pop_serialize())
-		old_output.clear_self()
-		old_output.is_full = true # jank way of getting it to spit out an extra EOF for the word it just cut off
-		animate_flip()
-'''
 
-func animate_flip():
-	baseSprite.flip_h = flipped
-	baseSprite.scale = Vector2.ONE * 1.1
-	create_tween().tween_property(baseSprite, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_QUAD)
+func set_directional_output(dir: int):
+	self.clear_outputs()
+	if dir == 0:
+		self.add_output(Vector2i.ZERO, Vector2i.UP)
+		bufferOutA.position = Vector2i(0,0)
+	elif dir == 1:
+		self.add_output(Vector2i(1,0), Vector2i(2,0))
+		bufferOutA.position = Vector2i(16,0)
+	elif dir == 2:
+		self.add_output(Vector2i(1,1), Vector2i(1,2))
+		bufferOutA.position = Vector2i(16,16)
+	elif dir == 3:
+		self.add_output(Vector2i(0,1), Vector2i(-1,1))
+		bufferOutA.position = Vector2i(0,16)
+	
+	# If the output was holding a letter, make sure it moves to the output's new location
+	if bufferOutA.held_letter:
+		bufferOutA.held_letter.send_to(bufferOutA.global_position)
+
+
+func animate_rotate():
+	if baseSpriteNode:
+		baseSpriteNode.rotation = PI/2 * ((direction+3)%4)
+		baseSpriteNode.scale = Vector2.ONE * 1.1
+		create_tween().tween_property(baseSpriteNode, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_QUAD)
 	

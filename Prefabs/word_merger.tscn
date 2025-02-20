@@ -7,19 +7,19 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4tm8q"]
 atlas = ExtResource("2_fwylc")
-region = Rect2(0, 48, 16, 32)
+region = Rect2(0, 32, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cisk0"]
 atlas = ExtResource("2_fwylc")
-region = Rect2(2, 51, 12, 26)
+region = Rect2(2, 34, 28, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jg0qh"]
 atlas = ExtResource("2_fwylc")
-region = Rect2(16, 48, 16, 32)
+region = Rect2(32, 32, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fdbn2"]
 atlas = ExtResource("2_fwylc")
-region = Rect2(18, 51, 12, 26)
+region = Rect2(34, 34, 28, 12)
 
 [node name="WordMerger" type="Node2D" node_paths=PackedStringArray("bufferInA", "bufferInB", "bufferOutA", "modeA", "modeB")]
 script = ExtResource("1_k1uqs")
@@ -30,52 +30,46 @@ modeA = NodePath("ModeA")
 modeB = NodePath("ModeB")
 
 [node name="ModeA" type="Node2D" parent="."]
-position = Vector2(0, 7)
+position = Vector2(8, 0)
 
 [node name="Base" type="Sprite2D" parent="ModeA"]
-position = Vector2(0, 1)
 texture = SubResource("AtlasTexture_4tm8q")
 
 [node name="Cover" type="Sprite2D" parent="ModeA"]
 z_index = 1
-position = Vector2(0, 1)
 texture = SubResource("AtlasTexture_cisk0")
 
 [node name="ModeB" type="Node2D" parent="."]
 visible = false
-position = Vector2(0, 8)
+position = Vector2(8, 0)
 
 [node name="Base" type="Sprite2D" parent="ModeB"]
-position = Vector2(0, 1)
 texture = SubResource("AtlasTexture_jg0qh")
 
 [node name="Cover" type="Sprite2D" parent="ModeB"]
 z_index = 1
-position = Vector2(0, 1)
 texture = SubResource("AtlasTexture_fdbn2")
 
 [node name="InputBufferA" type="Node2D" parent="."]
-position = Vector2(-4, 0)
+position = Vector2(0, -5)
 script = ExtResource("3_8qes7")
 
 [node name="SoundPool" type="Node2D" parent="InputBufferA"]
-position = Vector2(8, 0)
 script = ExtResource("4_dgycn")
 pitch_rescale = 1.5
 SOUND_PATH = "res://Audio/SFX/squelch.wav"
 
 [node name="InputBufferB" type="Node2D" parent="."]
-position = Vector2(-4, 16)
+position = Vector2(0, 5)
 script = ExtResource("3_8qes7")
 
 [node name="SoundPool" type="Node2D" parent="InputBufferB"]
-position = Vector2(8, -16)
 script = ExtResource("4_dgycn")
 pitch_rescale = 1.2
 SOUND_PATH = "res://Audio/SFX/squelch.wav"
 
 [node name="OutputBufferA" type="Node2D" parent="."]
-position = Vector2(4, 0)
+position = Vector2(21, 0)
 script = ExtResource("3_8qes7")
 
 [node name="SoundPool" type="Node2D" parent="OutputBufferA"]

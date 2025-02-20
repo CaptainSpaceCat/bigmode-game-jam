@@ -12,10 +12,10 @@ extends Machine
 var flipped: bool = false
 
 func _init():
-	self.discrete_shape = Vector2i(1,2)
-	self.add_input(Vector2i(-1,0), Vector2i(0,0))
-	self.add_input(Vector2i(-1,1), Vector2i(0,1))
-	self.add_output(Vector2i(0,0), Vector2i(1,0))
+	self.discrete_shape = Vector2i(2,1)
+	self.add_input(Vector2i.UP, Vector2i.ZERO)
+	self.add_input(Vector2i.DOWN, Vector2i.ZERO)
+	self.add_output(Vector2i(1,0), Vector2i(2,0))
 	self.unlocked_by_default = false
 
 

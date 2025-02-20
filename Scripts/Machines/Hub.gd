@@ -103,11 +103,16 @@ func perform_cycle(machine_map: Dictionary) -> void:
 			# unlock slicer and trash bin
 			machineCursor.unlock_machine(3)
 			machineCursor.unlock_machine(5)
+			
+			# send alerts
+			inventoryUI.send_alert("Play area expanded!\nNew machines unlocked!")
 		elif current_goal_index == 2:
 			pass
 			# unlock merger and combiner
 			machineCursor.unlock_machine(1)
 			machineCursor.unlock_machine(4)
+			# send alerts
+			inventoryUI.send_alert("New machines unlocked!")
 	
 	# Check for endgame again to keep the progress bar full for the next tick
 	# a bit jank tbh
