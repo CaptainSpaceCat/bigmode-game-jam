@@ -121,15 +121,6 @@ sprite_frames = SubResource("SpriteFrames_wqqt0")
 autoplay = "default"
 frame_progress = 0.255912
 
-[node name="OutputSlotA" type="Node2D" parent="."]
-position = Vector2(16, 0)
-script = ExtResource("3_m11u8")
-
-[node name="SoundPool" type="Node2D" parent="OutputSlotA"]
-script = ExtResource("4_kxhdo")
-gain_db = -32
-SOUND_PATH = "res://Audio/SFX/crush.wav"
-
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 z_index = 1
 material = SubResource("CanvasItemMaterial_bw3tw")
@@ -139,3 +130,12 @@ amount = 16
 process_material = SubResource("ParticleProcessMaterial_s55pu")
 texture = ExtResource("6_smada")
 lifetime = 0.5
+
+[node name="OutputSlotA" type="Node2D" parent="."]
+position = Vector2(16, 0)
+script = ExtResource("3_m11u8")
+
+[node name="SoundPool" type="Node2D" parent="OutputSlotA"]
+script = ExtResource("4_kxhdo")
+gain_db = -32
+SOUND_PATH = "res://Audio/SFX/crush.wav"

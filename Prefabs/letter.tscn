@@ -24,3 +24,7 @@ scale = Vector2(0.25, 0.25)
 label_settings = SubResource("LabelSettings_d5207")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Label"]
+position = Vector2(20, 28)
+scale = Vector2(4, 4)

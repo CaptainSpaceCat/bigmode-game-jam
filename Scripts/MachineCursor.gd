@@ -56,6 +56,7 @@ func _process(delta):
 		previous_mouse_drag_pos = Vector2i.ONE * 10000
 		previous_belt_pos = Vector2i.ONE * 1000
 		is_LMB_down = false
+		placement_sound.reset_pitch()
 		
 	# Handle left clicking to place machines
 	if is_LMB_down: #use this variable so that only unhandled clicks will trigger machine placement
@@ -116,10 +117,13 @@ func _process(delta):
 					previous_belt_pos = pos
 	
 	# Handle right clicking to remove machines
-	elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		previous_belt_pos = Vector2i.ONE * 10000
-		var pos = machineManager.snap_to_grid(get_global_mouse_position())
-		clear_machine(pos)
+	else:
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			previous_belt_pos = Vector2i.ONE * 10000
+			var pos = machineManager.snap_to_grid(get_global_mouse_position())
+			clear_machine(pos)
+		else:
+			delete_sound.reset_pitch()
 
 func place_machine(index: int, pos_index: Vector2i) -> Machine:
 	placement_sound.play_sound()

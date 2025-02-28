@@ -279,6 +279,7 @@ gain_db = -15
 pool_size = 15
 SOUND_PATH = "res://Audio/SFX/fwip.wav"
 global_sound = true
+mode = 1
 
 [node name="DeleteSound" type="Node2D" parent="MachineCursor"]
 script = ExtResource("14_1m64p")
@@ -287,6 +288,7 @@ pitch_rescale = 0.6
 pool_size = 15
 SOUND_PATH = "res://Audio/SFX/fwip.wav"
 global_sound = true
+mode = 2
 
 [node name="ItemManager" type="Node2D" parent="."]
 unique_name_in_owner = true
