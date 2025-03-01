@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://cb7b13t8s4p26"]
+[gd_scene load_steps=39 format=4 uid="uid://cb7b13t8s4p26"]
 
 [ext_resource type="Script" path="res://Scripts/CameraMover.gd" id="1_8n3nr"]
 [ext_resource type="Texture2D" uid="uid://br8ruipm44ww" path="res://Textures/background_quick.png" id="1_rrgag"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://Scripts/InventoryUIControl.gd" id="14_iv6m3"]
 [ext_resource type="Texture2D" uid="uid://chajj8i2bccpa" path="res://Textures/inventory_UI.png" id="14_rbadk"]
 [ext_resource type="Texture2D" uid="uid://b74hr332acssi" path="res://Textures/invo_slot_selected.png" id="15_7t8og"]
+[ext_resource type="Script" path="res://Scripts/ItemManager.gd" id="17_lbjhr"]
 [ext_resource type="Texture2D" uid="uid://dbnnjrfkecgew" path="res://Textures/ui_machine_bar.png" id="18_4pv33"]
 [ext_resource type="Script" path="res://Scripts/HotbarSelector.gd" id="19_2tkyx"]
 
@@ -291,7 +292,7 @@ global_sound = true
 mode = 2
 
 [node name="ItemManager" type="Node2D" parent="."]
-unique_name_in_owner = true
+script = ExtResource("17_lbjhr")
 
 [node name="CameraBounds" type="Node2D" parent="."]
 visible = false
