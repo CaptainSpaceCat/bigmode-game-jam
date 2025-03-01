@@ -376,6 +376,7 @@ anchor_top = 0.823
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -0.304016
+mouse_filter = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2"]
 layout_mode = 1
@@ -395,6 +396,7 @@ offset_left = -192.0
 offset_top = -31.0
 offset_bottom = 1.0
 scale = Vector2(2, 2)
+mouse_filter = 2
 texture = ExtResource("14_rbadk")
 
 [node name="HotbarSlotSelected" type="Control" parent="CanvasLayer/Control2/CenterContainer"]
@@ -419,6 +421,7 @@ offset_left = -159.0
 offset_top = -87.0
 offset_right = 159.0
 offset_bottom = -38.0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/Control2/CenterContainer/ItemNames/CenterContainer"]
 layout_mode = 2
@@ -433,9 +436,11 @@ offset_left = -192.0
 offset_top = -30.9999
 offset_bottom = 1.00006
 scale = Vector2(2, 2)
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/CenterContainer/HotbarItems/CenterContainer/HBoxContainer"]

@@ -45,7 +45,7 @@ func send_alert(message: String):
 
 func clear_alert():
 	var tween = create_tween()
-	tween.tween_property(alertLabel, "position", Vector2.UP*200, 1).set_trans(Tween.TRANS_QUAD).set_delay(alert_duration)
+	tween.tween_property(alertLabel, "position", Vector2.UP*300, 1).set_trans(Tween.TRANS_QUAD).set_delay(alert_duration)
 
 '''
 var queued_alerts: Array[String] = []

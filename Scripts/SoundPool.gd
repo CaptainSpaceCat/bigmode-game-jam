@@ -32,7 +32,7 @@ func _ready():
 var pitch_mult: float = 1
 const MAX_PITCH: float = 1.5
 var play_timestamp = 0
-@export var cutoff_time: float = 0.07
+var cutoff_time: float = 0.07
 
 func play_sound():
 	# drop any calls to play_sound that arrive within the cutoff window of a previous play
