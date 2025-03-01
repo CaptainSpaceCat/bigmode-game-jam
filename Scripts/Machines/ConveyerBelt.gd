@@ -9,8 +9,9 @@ var renderB: Node2D
 var slotA: Letter
 var slotB: Letter
 
-@onready var animationPlayer = $AnimationPlayer
-@onready var beltSprite = $Sprite2D
+@onready var animationPlayer := $AnimationPlayer
+@onready var beltSprite := $Sprite2D
+@onready var notifier := $VisibleOnScreenNotifier2D
 
 func _init() -> void:
 	self.add_input(Vector2i(-1,0), Vector2i.ZERO)
@@ -19,7 +20,16 @@ func _init() -> void:
 func _ready() -> void:
 	renderA = item_render_positions[3]
 	renderB = item_render_positions[1]
+	notifier.screen_entered.connect(_on_screen_entered)
+	notifier.screen_exited.connect(_on_screen_exited)
 	redraw_belt()
+
+
+func _on_screen_entered():
+	beltSprite.show()
+
+func _on_screen_exited():
+	beltSprite.hide()
 
 func change_output(out_world_pos: Vector2i):
 	var out_pos = self.grid_to_local(out_world_pos)

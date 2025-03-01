@@ -10,8 +10,8 @@ extends Machine
 @export var ringAnchor: Node2D
 @export var expandingRingPrefab: PackedScene = preload("res://Prefabs/expanding_ring.tscn")
 
-@onready var progress_complete_sound: SoundPool = $ProgressSound
-@onready var ding_sound: SoundPool = $DingSound
+@onready var progress_complete_sound := $ProgressSound
+@onready var ding_sound := $DingSound
 
 var shader : ShaderMaterial
 var current_progress: float = 0

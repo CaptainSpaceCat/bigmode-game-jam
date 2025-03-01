@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Letter
 
-var content: String = "" # Defaults to "", the EOF object for words
+var content := "" # Defaults to "", the EOF object for words
 @export var text_label: Label
 
 var goal_position: Vector2
@@ -15,10 +15,10 @@ func _ready():
 	notifier.screen_exited.connect(_on_screen_exited)
 
 func _on_screen_entered():
-	text_label.visible = true  # Show when on screen
+	text_label.show()  # Show when on screen
 
 func _on_screen_exited():
-	text_label.visible = false  # Hide when off screen
+	text_label.hide()  # Hide when off screen
 
 func set_letter(content: String) -> void:
 	if len(content) >= 1:

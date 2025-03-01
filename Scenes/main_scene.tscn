@@ -76,7 +76,7 @@ line_spacing = 1.0
 font_size = 20
 font_color = Color(0.257777, 0.596779, 0.904211, 1)
 outline_size = 7
-outline_color = Color(0.245571, 0.000259617, 0.723395, 1)
+outline_color = Color(0.0326508, 1.33803e-05, 0.171083, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rev78"]
 font_size = 25
@@ -264,7 +264,7 @@ position = Vector2(-248, 360)
 flipped = true
 
 [node name="Lightbulb" parent="MachineManager/MachineParent" instance=ExtResource("8_vr1jn")]
-position = Vector2(552, 120)
+position = Vector2(568, 120)
 
 [node name="MachineCursor" type="Node2D" parent="." node_paths=PackedStringArray("inventoryUI", "oreVeinLayer")]
 z_index = 3

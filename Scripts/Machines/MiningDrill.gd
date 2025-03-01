@@ -3,8 +3,9 @@ extends Machine
 
 @export var generate_pos: Node2D
 @export var bufferOutA: LetterBuffer
-@onready var baseSpriteNode: Node2D = $ModeA
+@onready var baseSpriteNode := $ModeA
 @export var particleEmitter: GPUParticles2D
+@export var animated_rollers: AnimatedSprite2D
 
 func _ready():
 	direction = 1
@@ -27,9 +28,11 @@ func perform_cycle(machine_map: Dictionary) -> void:
 	# Send a new word to the output every n cycles
 	# Suspend if the output is blocked
 	if cycle_index >= len(word) + delay_cycles:
+		animated_rollers.pause()
 		if bufferOutA.try_apply_string(word.reverse()):
 			cycle_index = 0
 			particleEmitter.emitting = true
+			animated_rollers.play()
 	cycle_index += 1
 	
 	process_output_buffer(machine_map, 0, bufferOutA)

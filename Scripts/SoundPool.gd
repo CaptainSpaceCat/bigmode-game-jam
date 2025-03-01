@@ -5,9 +5,9 @@ var sound_pool = []
 @export var gain_db = -25
 @export var pitch_rescale: float = 1
 @export var pool_size = 5  # Max number of simultaneous sounds
-@export var SOUND_PATH = "res://Audio/SFX/"  # Replace in editor with the sound path for each machine
+@export var SOUND_PATH := "res://Audio/SFX/"  # Replace in editor with the sound path for each machine
 
-@export var global_sound: bool = false
+@export var global_sound := false
 
 enum SoundMode { RANDOM_PITCH, ASCENDING_PITCH, DESCENDING_PITCH }
 @export var mode: SoundMode = SoundMode.RANDOM_PITCH

@@ -9,7 +9,7 @@ extends Machine
 @export var modeA: Node2D
 @export var modeB: Node2D
 
-var flipped: bool = false
+var flipped := false
 
 func _init():
 	self.discrete_shape = Vector2i(2,1)

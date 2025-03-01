@@ -5,7 +5,7 @@ extends Machine
 @export var bufferOutA: LetterBuffer
 @export var bufferOutB: LetterBuffer
 
-@export var numberLabel: RichTextLabel
+@export var numberLabel: Label
 @export var modeA: Node2D
 @export var modeB: Node2D
 
@@ -27,14 +27,13 @@ func send_letter_to_channel(channel: int, letter: Letter) -> bool:
 
 func set_slice_index(index: int):
 	slice_index = clampi(index, 1, 9)
-	numberLabel.clear()
-	numberLabel.add_text(str(slice_index))
+	numberLabel.text = str(slice_index)
 
 
 func perform_cycle(machine_map: Dictionary) -> void:
 	if bufferInA.is_full and not (bufferOutA.is_full or bufferOutB.is_full):
 		var word = bufferInA.pop_serialize()
-		var effective_slice_index = clampi(slice_index, 1, len(word)-1)
+		var effective_slice_index = clampi(slice_index, 1, len(word))
 		var slice_A = word.substr(len(word) - effective_slice_index)
 		var slice_B = word.substr(0, len(word) - effective_slice_index)
 		# Prepend spaces to slice_A equal to the number of letters in slice_B

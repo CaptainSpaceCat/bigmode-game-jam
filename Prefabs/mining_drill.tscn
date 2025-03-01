@@ -98,11 +98,12 @@ scale_min = 0.5
 scale_max = 0.7
 anim_offset_max = 1.0
 
-[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA", "particleEmitter")]
+[node name="MiningDrill" type="Node2D" node_paths=PackedStringArray("generate_pos", "bufferOutA", "particleEmitter", "animated_rollers")]
 script = ExtResource("1_y23cw")
 generate_pos = NodePath("OutputSlotA")
 bufferOutA = NodePath("OutputSlotA")
 particleEmitter = NodePath("GPUParticles2D")
+animated_rollers = NodePath("AnimatedSprite2D")
 
 [node name="ModeA" type="Node2D" parent="."]
 position = Vector2(8, 8)

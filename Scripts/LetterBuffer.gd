@@ -2,13 +2,13 @@ class_name LetterBuffer
 extends Node2D
 
 
-var content: String = ""
-var is_full: bool = false
+var content := ""
+var is_full := false
+var sound_ready := false
 var queue_delete: Letter
 var letterPrefab: PackedScene = preload("res://Prefabs/letter.tscn")
 @onready var itemParent: Node2D = get_node("/root/Main Scene/ItemManager")
 
-var sound_ready: bool = false
 
 # Appends the provided letter to the end of the buffer
 # Returns success state
@@ -38,8 +38,8 @@ func try_append(letter: Letter) -> bool:
 func try_apply_string(word: String) -> bool:
 	if is_full:
 		return false
-	content = word
-	if len(content) > 0:
+	if len(word) > 0:
+		content = word
 		is_full = true
 	return true
 

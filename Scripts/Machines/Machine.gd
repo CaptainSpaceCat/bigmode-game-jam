@@ -1,11 +1,11 @@
 class_name Machine
 extends Node2D
 
-var update_flag: bool = false
+var update_flag := false
 var discrete_position: Vector2i  # World grid position of the machine
-var discrete_shape: Vector2i = Vector2i.ONE # Width and height of the machine
-var unlocked_by_default: bool = true
-var is_destructible: bool = true
+var discrete_shape := Vector2i.ONE # Width and height of the machine
+var unlocked_by_default := true
+var is_destructible := true
 
 # accepts a vector2i position on the world grid
 # returns the same vector relative to this machine's origin

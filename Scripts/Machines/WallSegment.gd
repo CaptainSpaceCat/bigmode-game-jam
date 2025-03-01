@@ -1,10 +1,10 @@
 class_name WallChunk
 extends Machine
 
-var delete_next_cycle: bool = false
+var delete_next_cycle := false
 
-@export var flipped: bool = false
-@onready var soundPool: SoundPool = $SoundPool
+@export var flipped := false
+@onready var soundPool := $SoundPool
 
 func _ready():
 	# dummy IOs for correct door deletion ordering

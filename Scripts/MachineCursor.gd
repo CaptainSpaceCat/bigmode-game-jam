@@ -2,15 +2,15 @@
 class_name MachineCursor
 extends Node2D
 
-@export var debug_mode: bool = true  # Toggle this for debug mode
+@export var debug_mode := true  # Toggle this for debug mode
 @onready var machineManager: MachineManager = get_node("/root/Main Scene/MachineManager")
 @export var inventoryUI: InventoryUI
 @export var oreVeinLayer: TileMapLayer
 const GRID_SIZE = MachineManager.GRID_SIZE
 
 
-@onready var placement_sound: SoundPool = $PlacementSound
-@onready var delete_sound: SoundPool = $DeleteSound
+@onready var placement_sound := $PlacementSound
+@onready var delete_sound := $DeleteSound
 # which machines we have unlocked
 var machine_unlocked: Array[bool] = []
 # shapes of all the machines
