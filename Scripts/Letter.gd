@@ -8,7 +8,6 @@ var content := "" # Defaults to "", the EOF object for words
 var goal_position: Vector2
 @onready var notifier := $VisibleOnScreenNotifier2D
 
-
 func _ready():
 	goal_position = global_position
 	notifier.screen_entered.connect(_on_screen_entered)

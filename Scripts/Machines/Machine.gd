@@ -96,6 +96,8 @@ func shrink_and_free(duration: float = 0.2):
 
 var input_array: Array = []
 var output_array: Array = []
+var input_array_global: Array = []
+var output_array_global: Array = []
 
 func add_input(from: Vector2i, to: Vector2i) -> void:
 	input_array.append(MachineIO.new(from, to))
@@ -105,9 +107,11 @@ func add_output(from: Vector2i, to: Vector2i) -> void:
 
 func clear_inputs() -> void:
 	input_array.clear()
+	input_array_global.clear()
 
 func clear_outputs() -> void:
 	output_array.clear()
+	output_array_global.clear()
 
 func num_inputs() -> int:
 	return len(input_array)
@@ -116,12 +120,16 @@ func num_outputs() -> int:
 	return len(output_array)
 
 func get_input(index: int) -> MachineIO:
-	var local = input_array[index]
-	return MachineIO.new(local.from + discrete_position, local.to + discrete_position)
+	if input_array_global.is_empty():
+		for io in input_array:
+			input_array_global.append(MachineIO.new(io.from + discrete_position, io.to + discrete_position))
+	return input_array_global[index]
 
 func get_output(index: int) -> MachineIO:
-	var local = output_array[index]
-	return MachineIO.new(local.from + discrete_position, local.to + discrete_position)
+	if output_array_global.is_empty():
+		for io in output_array:
+			output_array_global.append(MachineIO.new(io.from + discrete_position, io.to + discrete_position))
+	return output_array_global[index]
 
 
 func get_relative_direction(from: Vector2i, to: Vector2i) -> int:

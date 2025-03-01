@@ -75,7 +75,6 @@ func snap_to_grid(pos: Vector2) -> Vector2i:
 	)
 
 var update_stack: Array[Machine] = []
-const MAX_TIME_PER_FRAME : float = 0.005
 
 func update_all_machines() -> void:
 	is_updating = true
@@ -86,19 +85,18 @@ func update_all_machines() -> void:
 			continue
 		m.update_flag = true
 	
-	# Recursively evaluate the state of the machines
+	# Evaluate the state of the machines
 	for m: Machine in machine_map.values():
 		if not m:
 			continue
-			
-		var start_time = Time.get_ticks_msec()  # Get start time in milliseconds
 		
 		if m.update_flag:
 			m.update_flag = false
 			update_stack.append(m)
 		else:
 			continue
-			
+		
+		
 		while len(update_stack) > 0:
 			# peek at the top of the stack
 			var machine: Machine = update_stack[len(update_stack)-1]
@@ -118,34 +116,5 @@ func update_all_machines() -> void:
 			if not recur_flag:
 				update_stack.pop_back().perform_cycle(machine_map)
 			
-			# Yield after a set amount of processing time, allowing the game to continue
-			if (Time.get_ticks_msec() - start_time) / 1000.0 >= MAX_TIME_PER_FRAME:
-				pass
-				#print("Yielding")
-				#await get_tree().process_frame
 	# Mark the machine manager as no longer updating
 	is_updating = false
-
-
-func recursive_update(machine: Machine):
-	# If the update flag is false, we have already updated this machine this cycle
-	# Thus we return imediately
-	if !machine.update_flag:
-		return
-	# Otherwise, we're about to perform the update to this machine,
-	# so set the update flag to false
-	machine.update_flag = false
-	
-	# Perform the recursive update
-	for i in range(machine.num_outputs()):
-		var io = machine.get_output(i)
-		# for each machine output
-		# see if there's a corresponding input
-		# if so, call recursive_update on that machine
-		var other_machine = machine_map.get(io.to)
-		if other_machine and other_machine.can_accept_input(io.from, io.to):
-			recursive_update(other_machine)
-	
-	# All machines further down the line should be recursively updated by now
-	# We now call perform_cycle on this machine
-	machine.perform_cycle(machine_map)
